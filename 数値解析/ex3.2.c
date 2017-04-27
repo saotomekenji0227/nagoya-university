@@ -12,10 +12,10 @@ int main(int argc ,char *argv[]){
   count=0;
   if(strcmp(argv[1],"newton")==0){
     answer=newton(atoi(argv[2]));
-    printf("answer=%f\n",answer);
+    printf("answer=%.13f\n",answer);
   }else{
     answer=nibun(atoi(argv[2]),atoi(argv[3]));
-    printf("answer=%f,count=%d\n",answer,count);
+    printf("answer=%.13f,count=%d\n",answer,count);
   }
   return 0;
 }
