@@ -6,8 +6,13 @@ int main(int argc,char *argv[]){
   int h,w;
   fscanf(fp,"%d",&h);
   fscanf(fp,"%d",&w);
-  int data[h][w];//学習データ読み込み
-  int tmp[h][w];
+  int **data,**tmp;//学習データ読み込み
+  data=(int**)malloc(h*sizeof(int*));
+  tmp=(int**)malloc(h*sizeof(int*));
+  for(i=0;i<h;i++){
+    data[i]=(int*)malloc(w*sizeof(int));
+    tmp[i]=(int*)malloc(w*sizeof(int));
+  }
   for(i=0;i<h;i++){
     for(j=0;j<w;j++){
       fscanf(fp,"%d",&data[i][j]);
