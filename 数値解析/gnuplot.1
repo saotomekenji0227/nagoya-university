@@ -1,0 +1,12 @@
+#set term X11
+set term postscript portrait
+set output '081531257saotomekenji.ps'
+set title "081531257saotomekenji.ps"  
+set size 1.0, 0.7
+set xlabel "X"
+set ylabel "Y"
+set xtics 0, 1
+set ytics -3, 1
+set zeroaxis
+plot [0:10][-3:3] 'ex3.1.dat' title 'y=e^(x^2)-sin(x)' with dots
+#plot [-4:4][-5:5] 'data1.dat' title 'data 1' with points,'data2.dat' title 'data 2' with points 

@@ -1,0 +1,17 @@
+\documentclass[]{jsarticle}
+\usepackage{amsmath}
+\title{第四回数値解析演習}
+\author{081531257,早乙女 献自}
+\date{2017/04/19}
+\begin{document}
+\maketitle
+\section{課題1:Lagrange補完}
+$(x_0,y_0)=(0,0),(x_1,y_1)=(1,1),(X_2,Y_2)=(2,4)$より、Lagrange補完多項式は
+$$P_2(x)=\frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)}y_0+\frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)}y_1+\frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)}y_2$$
+$$P_2(x)=\frac{(x-1)(x-2)}{(0-1)(0-2)}\times0+\frac{(x-0)(x-1)}{(1-0)(1-2)}\times1+\frac{(x-0)(x-2)}{(2-0)(2-1)}\times4$$
+$$P_2(x)=\frac{x^2-2x}{-1}+\frac{4x^2-4x}{2}$$
+$$P_2(x)=x^2$$
+以上より、与えられた点によるLagrange補完多項式は$P_2(x)=x^2$となった。
+\section{課題2:Lagrange補完多項式の数値計算}
+
+\end{document}
