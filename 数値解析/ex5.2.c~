@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<math.h>
+
+void equation(double a[],double b[],double c[],double x[],double y[],int n);
+
+void main(int argc,char *argv[]){
+  int ow,oh; //original width,original height
+  int i,j;
+  FILE *fp1=fopen(argv[1],"r");
+  FILE *fp2=fopen(argv[2],"w");
+  fscanf(fp1,"%d",&ow); //P2を破棄
+
+  fscanf(fp1,"%d",&ow);
+  fscanf(fp1,"%d",&oh);
+  double **ae; //ae[oh][ow]
+  ae=(double**)malloc(sizeof(double*)*oh);
+  for(i=0;i<oh;i++){
+    ae[i]=(double*)malloc(sizeof(double)*ow);
+  }
+  for(i=0;i<oh;i++){
+    for(j=0;j<ow;j++){
+      fscanf(fp1,"%d",&ae[i][j]);
+    }
+  }
+  return;
+}
+void equation(double a[],double b[],double c[],double x[],double y[],int n){
+  int i;
+  double d[n+1],l[n+1],z[n+1];
+  d[1]=a[1];
+  for(i=2;i<=n;i++){
+    l[i]=b[i]/d[i-1];
+    d[i]=a[i]-l[i]*c[i-1];
+  }
+  z[1]=y[1];
+  for(i=2;i<=n;i++){
+    z[i]=y[i]-l[i]*z[i-1];
+  }
+  x[n]=z[n]/d[n];
+  for(i=n-1;i>=1;i--){
+    x[i]=(z[i]-c[i]*x[i+1])/d[i];
+  }
+}
