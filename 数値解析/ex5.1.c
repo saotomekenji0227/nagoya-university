@@ -2,82 +2,75 @@
 #include<math.h>
 #define N 11
 
-double fx(double x);
+double f(double x);
 
-void equation(double a[],double b[],double c[],double x[],double y[]);
+void equation(double a[],double b[],double c[],double x[],double y[],int n);
 
 double S(double x,double a[],double b[],double c[],double d[],double h);
 
 int main(){
 
   FILE *fp=fopen("ex5.1.dat","w");
+  FILE *fp2=fopen("ex5.1.point.dat","w");
   int i; 
-  double h=2.0/10;
-  double xx=-1.0;
-  double a[N+1],b[N+1],c[N+1],d[N],x[N+1],y[N+1],f[N+1];
-
+  static double h=0.2;
+  double x=-1.0;
+  double a[N+1],b[N+1],c[N+1],d[N],u[N+1],v[N+1],y[N];
   for(i=0;i<N;i++){
-    f[i]=fx(xx);
-    xx+=h;
+    y[i]=f(x);
+    x+=h;
   }
   for(i=1;i<N;i++){
-    y[i]=6*((f[i+1]-2*f[i]+f[i-1])/h);
-    a[i]=4*h;
+    v[i]=6.*((y[i+1]-2*y[i]+y[i-1])/h);
+    a[i]=4.*h;
     b[i]=h;
     c[i]=h;
   }
-  equation(a,b,c,x,y);
-  x[0]=0;
-  x[N]=0;
-  for(i=0;i<N+1;i++){
-   printf("%f ",a[i]);
-   printf("%f ",b[i]);
-   printf("%f ",c[i]);
-   printf("%f\n",f[i]);
-
-  }
+  u[0]=0;
+  u[N]=0;
+  equation(a,b,c,u,v,N-1);
   for(i=0;i<N;i++){
-    b[i]=x[i]/2;
-    a[i]=(x[i+1]-x[i])/h;
-    d[i]=f[i];
-    c[i]=(f[i+1]-f[i])/h-h*(2*x[i]+x[i+1])/6;
-  }
+    a[i]= (u[i+1]-u[i])/(6*h);
+    b[i]=u[i]/2;
+    c[i]=(y[i+1]-y[i])/h-1./6.*h*(2*u[i]+u[i+1]);
+    d[i]=y[i];
 
+  }
   double ii;
   for(ii=-1000;ii<1001;ii++){
     fprintf(fp,"%lf %lf\n",ii/1000,S(ii/1000,a,b,c,d,h));
   }
   fclose(fp);
+  fclose(fp2);
   return 0;
 }
 
-double fx(double x){
-  return 1/(1+25*x*x);
+double f(double x){
+  return 1./(1.+25.*x*x);
 }
 
-void equation(double a[],double b[],double c[],double x[],double y[]){
+void equation(double a[],double b[],double c[],double x[],double y[],int n){
   int i;
-  double d[N],l[N],z[N];
+  double d[n+1],l[n+1],z[n+1];
   d[1]=a[1];
-  for(i=2;i<=N-1;i++){
+  for(i=2;i<=n;i++){
     l[i]=b[i]/d[i-1];
     d[i]=a[i]-l[i]*c[i-1];
   }
   z[1]=y[1];
-  for(i=2;i<=N-1;i++){
+  for(i=2;i<=n;i++){
     z[i]=y[i]-l[i]*z[i-1];
   }
-  x[N-1]=z[N-1]/d[N-1];
-  for(i=N-2;i>=1;i--){
+  x[n]=z[n]/d[n];
+  for(i=n-1;i>=1;i--){
     x[i]=(z[i]-c[i]*x[i+1])/d[i];
-
   }
 }
 
 double S(double x,double a[],double b[],double c[],double d[],double h){
   double xj=-1.,l;
   int j=0;
-  while(xj-x<1.0E-4){
+  while(x>xj+h+1.0E-6){
     xj+=h;
     j++;
   }
