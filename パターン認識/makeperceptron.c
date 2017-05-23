@@ -2,7 +2,7 @@
 
 #define N 2
 #define C 3
-#define P 6
+#define P 8
 #define RHO 1.0
 #define EPS 1.0E-6
 //各要素 クラス
