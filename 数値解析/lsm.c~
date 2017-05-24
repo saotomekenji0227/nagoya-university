@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <math.h>
+void solveslm(double x[],double y[],size,double *K,double *H);
+
+void main(int argc char *argv[]){
+  FILE *fp=fopen("halebopp.dat","r");
+  int count=0;
+  double tmp;
+  double r[100],de[100],m1[100];
+  double x[100],y[100];
+  double K,H;
+  while(1){
+    if(fscanf(fp,"%lf",&tmp)==EOF) break;
+    if(fscanf(fp,"%lf",&tmp)==EOF) break;
+    if(fscanf(fp,"%lf",&tmp)==EOF) break;
+    if(fscanf(fp,"%lf",&tmp)==EOF) break;
+    r[count]=tmp;
+    if(fscanf(fp,"%lf",&tmp)==EOF) break;
+    de[count]=tmp;
+    if(fscanf(fp,"%lf",&tmp)==EOF) break;
+    m1[count]=tmp;
+    x[count]=log10(r[count]);
+    y[count]=m1[count]-5*log10(de[count]);
+    ++count;
+    printf("%f %f\n",x[count-1],y[count-1]);
+  }
+  solveslm(x,y,size,K,H);
+  return;
+}
+
+void solveslm(double x[],double y[],size,double *K,double *H){
+  // for(i=0;i<size;i++){
+  //  K=size*{}
+  }

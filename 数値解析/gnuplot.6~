@@ -1,0 +1,11 @@
+#set term X11
+set term postscript portrait
+set output '081531257saotomekenji.ps'
+set title "演習6課題1"  
+set size 1.0, 0.7
+set xlabel "X"
+set ylabel "Y"
+set xtics -1, 0.5
+set ytics -7, 1
+set zeroaxis
+plot [-1:1][-7:7] 'data.dat' title 'original data' with dots,'lsm.dat' title 'y=f(x)' with dots
