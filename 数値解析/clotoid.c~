@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <math.h>
+#define NMAX 4096
+
+double cos2(double t);
+double sin2(double t);
+double trapezoid(double y[],int element);
+void main(int argc,char *argv[]){
+  FILE *fp=fopen("clothoid.dat","w");
+  int i,j;
+  double t;
+  double x, y;
+  double xx[1000],yy[1000];
+  int count=0;
+  double h;
+  for(t=-10.;t<=10.;t+=0.03125){
+    if(t==0.){
+      xx[count]=0; yy[count]=0;
+      continue;
+    }
+    x=0.; y=0.;
+    x+=cos2(0.); y+=sin2(0.);
+    x+=cos2(t) ; y+=sin2(t);
+    h=t/4096;
+    for(i=1;i<4095;i++){
+      x+=1/2*cos2(h);
+      y+=1/2*sin2(h);
+      h+=t/4096;
+    }
+    xx[count]=x;
+    yy[count]=y;
+    count++;
+  }
+  for(i=0;i<count;i++){
+    fprintf(fp,"%f %f\n",xx[i],yy[i]);
+  }
+  fclose(fp);
+  return;
+}
+double cos2(double t){
+  return fabs(cos(t*t));
+}
+double sin2(double t){
+  return fabs(sin(t*t));
+}

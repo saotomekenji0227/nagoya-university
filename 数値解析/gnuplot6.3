@@ -1,0 +1,11 @@
+#set term X11
+set term postscript portrait
+set output 'ex6.3.ps'
+set title "ex6.3"  
+set size 1.0, 0.7
+set xlabel "X"
+set ylabel "Y"
+set xtics -2, 0.5
+set ytics -2, 0.5
+set zeroaxis
+plot [-2:2][-2:2] 'clothoid.dat' title '(x(t),y(t))' with dots
