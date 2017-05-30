@@ -56,7 +56,7 @@ double multi(double x[],double w[],int N){ //makeperceptron.cと同様の計算
 
 double max(double g[],int size){ //最大値計算(g[]の最大値を返す)
   int i;
-  double max=0.;
+  double max=g[0];
   for(i=0;i<size;i++){
     if(g[i]>max)
       max=g[i];

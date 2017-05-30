@@ -1,0 +1,11 @@
+#set term X11
+set term postscript portrait
+set output 'ex6.2.ps'
+set title "ex6.2"  
+set size 1.0, 0.7
+set xlabel "X"
+set ylabel "Y"
+set xtics 0, 1
+set ytics -9, 1
+set zeroaxis
+plot [0:4][-9:0] 'tra.dat' title 'error of trapezoidal rule(log-log graph)' with dots,'trapoint.dat' title 'error of trapezoidal rule(point)' with points
