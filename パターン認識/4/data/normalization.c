@@ -13,8 +13,8 @@ void main(int argc,char *argv[]){
   int B[NORMAL][NORMAL];
   char fileName[256];
   int i=0,j=0;
-  //for(i=0;i<10;i++){
-  //for(j=0;j<100;j++){
+  for(i=0;i<10;i++){
+    for(j=0;j<100;j++){
       sprintf(fileName,"%01d-%02d.dat",i,j);
       fp=fopen(fileName,"r");
       readfile(fp,&w,&h,A);
@@ -24,8 +24,8 @@ void main(int argc,char *argv[]){
       fp=fopen(fileName,"w");
       writefile(fp,NORMAL,NORMAL,B);
       fclose(fp);
-      //}
-      //}
+    }
+  }
   return;
 }
 
@@ -34,14 +34,11 @@ void readfile(FILE *fp,int *w,int *h,int A[][MAX]){
   int tmp;
   fscanf(fp,"%d",w);
   fscanf(fp,"%d",h);
-  printf("%d %d\n",*w,*h);
   for(i=0;i<*h;i++){
     for(j=0;j<*w;j++){
       fscanf(fp,"%d",&tmp);
       A[i][j]=tmp;
-      printf("%d ",tmp);
     }
-    printf("\n");
   }
 }
 
@@ -50,7 +47,7 @@ void writefile(FILE *fp,int w,int h,int A[NORMAL][NORMAL]){
   fprintf(fp,"%d %d\n",w,h);
   for(i=0;i<h;i++){
     for(j=0;j<w;j++){
-      fprintf(fp,"%d ",A[h][w]);
+      fprintf(fp,"%d ",A[i][j]);
     }
     fprintf(fp,"\n");
   }
