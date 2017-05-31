@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <math.h>
+#define NMAX 4096
+
+double f(double x);
+double trapezoid(double y[],int element);
+void solveslm(double x[],double y[],int size,double *K,double *H);
+
+void main(int argc,char *argv[]){
+  FILE *fp=fopen("simpson.dat","w");
+  int i,j;
+  int N=0;
+  double y[NMAX];
+  double tmp=0.;
+  int count=0;
+  double traarray[100];
+  double simarray[100];
+  int element=2;
+  double ans;
+
+
+  for(i=1,count=0;i<4097;i*=2,count++){
+    for(j=0;j<=i;j++)
+      y[j]=f(1./i*j);
+    ans=y[0]/2;
+    ans+=y[i]/2;
+    for(j=1;j<i;j++)
+      ans+=y[j];
+    traarray[count]=ans/i;
+    printf("T^(0)_%d=%.13lf 誤差%.13lf\n",count,traarray[count],M_PI-traarray[count]);
+  }
+  for(i=1;i<count;i++){
+    simarray[i]=traarray[i]*4/3-traarray[i-1]/3;
+    printf("T^{(1)}_%d=%.13f 誤差%.13lf\n",i,simarray[i],M_PI-simarray[i]);
+  }
+  
+  return;
+}
+
+double f(double x){
+  return 4.*sqrt(1-x*x);
+}
+
+double trapezoid(double y[],int element){
+  double h=1./(element-1);
+  double I=y[0]/2;
+  I+=y[element-1]/2;
+  element-=2;
+  while(element>0){
+    I+=y[element];
+    --element;
+  }
+  return h*I;
+}
+
+void solveslm(double x[],double y[],int size,double *A,double *B){
+  int i;
+  double sumxy=0.,sumx=0.,sumy=0.,sumxx=0.;
+   for(i=0;i<size;i++){
+     sumxy+=x[i]*y[i];
+     sumx+=x[i];
+     sumy+=y[i];
+     sumxx+=x[i]*x[i];
+   }
+   *A=(size*sumxy-sumx*sumy)/(size*sumxx-sumx*sumx);
+   *B=(sumxx*sumy-sumx*sumxy)/(size*sumxx-sumx*sumx);
+}
