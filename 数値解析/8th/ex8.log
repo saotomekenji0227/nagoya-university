@@ -1,9 +1,9 @@
-This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015) (preloaded format=platex 2015.9.18)  31 MAY 2017 12:05
+This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015) (preloaded format=platex 2015.9.18)  7 JUN 2017 12:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**ex7.tex
-(./ex7.tex
+**ex8.tex
+(./ex8.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2015/01/01> patch level 2)
 Babel <3.9m> and hyphenation patterns for 79 languages loaded.
 (/usr/local/texlive/2015/texmf-dist/tex/platex/jsclasses/jsarticle.cls
@@ -98,50 +98,53 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \mathdisplay@stack=\toks19
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
-) (./ex7.aux)
-\openout1 = `ex7.aux'.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/comment/comment.sty
+\CommentStream=\write3
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
+Excluding comment 'comment') (./ex8.aux)
+\openout1 = `ex8.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 16.60605pt on input line 7.
+(Font)              scaled to size 16.60605pt on input line 8.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 16.60605pt on input line 7.
+(Font)              scaled to size 16.60605pt on input line 8.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 7.
+(Font)              scaled to size 11.53198pt on input line 8.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 7.
+(Font)              scaled to size 11.53198pt on input line 8.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 7.
+(Font)              scaled to size 5.76599pt on input line 8.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 8.
+(Font)              scaled to size 6.72699pt on input line 10.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 4.805pt on input line 8.
+(Font)              scaled to size 4.805pt on input line 10.
+ [1
 
-[1
-
-] [2] (./ex7.aux) ) 
+] [2] (./ex8.aux) ) 
 Here is how much of TeX's memory you used:
- 1003 strings out of 493779
- 10826 string characters out of 6151456
- 77689 words of memory out of 5000000
- 4550 multiletter control sequences out of 15000+600000
+ 1039 strings out of 493779
+ 11442 string characters out of 6151456
+ 81382 words of memory out of 5000000
+ 4582 multiletter control sequences out of 15000+600000
  13082 words of font info for 57 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 27i,6n,20p,224b,227s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,12n,20p,219b,227s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ex7.dvi (2 pages, 3756 bytes).
+Output written on ex8.dvi (2 pages, 5220 bytes).

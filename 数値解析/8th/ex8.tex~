@@ -1,0 +1,138 @@
+\documentclass[]{jsarticle}
+\usepackage{amsmath}
+\usepackage{comment}
+\title{第7回数値解析演習}
+\author{081531257,早乙女 献自}
+\date{2017/04/19}
+\begin{document}
+\maketitle
+課題1 ガウスの消去法
+\begin{eqnarray}
+x_1-x_2+2x_3&=&4\nonumber\\
+2x_1-2x_2+x_3&=&2\nonumber\\
+-x_1+3x_2+x_3&=&8\nonumber
+\end{eqnarray}
+\noindent
+(1)上記の式について手計算で計算した。その結果を以下に示す。\\
+\begin{eqnarray}
+\left[
+\begin{array}{rrr|r}
+  1&-1&2&4\\
+  　&　&　&\\
+  2&-2&1&2\\
+  　&　&　&\\
+  -1&3&1&8
+\end{array}
+\right]
+&=&
+\left[
+\begin{array}{rrr|r}
+  2&-2&1&2\\
+  　&　&　&\\
+  1&-1&2&4\\
+  　&　&　&\\
+  -1&3&1&8
+\end{array}
+\right]
+\\\nonumber\\
+&=&
+\left[
+\begin{array}{rrr|r}
+  2&-2&1&2\\
+  　&　&　&\\
+  0&0&\frac{3}{2}&3\\
+  　&　&　&\\
+  0&2&\frac{3}{2}&9
+\end{array}
+\right]
+\\\nonumber\\
+&=&
+\left[
+\begin{array}{rrr|r}
+  2&-2&1&2\\
+  　&　&　&\\
+  0&2&\frac{3}{2}&9\\
+  　&　&　&\\
+  0&0&\frac{3}{2}&3
+\end{array}
+\right]\\
+\frac{3}{2}x_3&=&3\nonumber\\
+x_3&=&2\nonumber\\
+2x_2+3&=&9\nonumber\\
+x_2&=&3\nonumber\\
+2x_1-6+2&=&2\nonumber\\
+x_1&=&3\nonumber
+\end{eqnarray}
+
+(1)では1列目最大の要素である2行目の2をピボットにするため、ピボッティングを行った。
+
+(2)では1列目について前進消去を行った。
+
+(3)では2列目について2行目以降で最大の要素である3行目の2をピボットにするためピボッティングを行った。この時点で下三角の要素についてすべて0になったため、前進消去を終了した。\\\\
+(2)プログラムによりガウスの消去法を実装し、結果を出力した。実行結果を以下に示す。
+
+(1)上記の式について手計算で計算した。その結果を以下に示す。\\
+\begin{eqnarray}
+\left[
+\begin{array}{rrr|r}
+  1&-1&2&4\\
+  　&　&　&\\
+  2&-2&1&2\\
+  　&　&　&\\
+  -1&3&1&8
+\end{array}
+\right]
+&=&
+\left[
+\begin{array}{rrr|r}
+  2&-2&1&2\\
+  　&　&　&\\
+  1&-1&2&4\\
+  　&　&　&\\
+  -1&3&1&8
+\end{array}
+\right]
+\\\nonumber\\
+&=&
+\left[
+\begin{array}{rrr|r}
+  2&-2&1&2\\
+  　&　&　&\\
+  0&0&\frac{3}{2}&3\\
+  　&　&　&\\
+  0&2&\frac{3}{2}&9
+\end{array}
+\right]
+\\\nonumber\\
+&=&
+\left[
+\begin{array}{rrr|r}
+  2&-2&1&2\\
+  　&　&　&\\
+  0&2&\frac{3}{2}&9\\
+  　&　&　&\\
+  0&0&\frac{3}{2}&3
+\end{array}
+\right]\\
+\frac{3}{2}x_3&=&3\nonumber\\
+x_3&=&2\nonumber\\
+2x_2+3&=&9\nonumber\\
+x_2&=&3\nonumber\\
+2x_1-6+2&=&2\nonumber\\
+x_1&=&3\nonumber
+\end{eqnarray}
+
+(1)では1列目最大の要素である2行目の2をピボットにするため、ピボッティングを行った。
+
+(2)では1列目について前進消去を行った。
+
+(3)では2列目について2行目以降で最大の要素である3行目の2をピボットにするためピボッティングを行った。この時点で下三角の要素についてすべて0になったため、前進消去を終了した。\\\\
+(2)プログラムによりガウスの消去法を実装し、結果を出力した。実行結果を以下に示す。\\
+\$ ./a.out\\
+2.000000 -2.000000 1.000000 \\
+-1.000000 2.000000 1.500000 \\
+1.000000 0.000000 1.500000 \\
+x1 = 3.000000\\
+x2 = 3.000000\\
+x3 = 2.000000
+\end{document}
