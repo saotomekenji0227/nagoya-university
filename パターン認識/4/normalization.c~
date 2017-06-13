@@ -1,0 +1,41 @@
+#include <stdio.h>
+#define NOMAL 4
+
+void normalization(int **A,int B[NOMAL][NOMAL]);
+void readfile(FILE *fp,int *w,int *h,int *A);
+
+
+void main(int argc,char *argv[]){
+  FILE *fp;
+  int w,h;
+  int **A;
+  int B[NOMAL][NOMAL];
+  char fileName[256];
+  int i,j;
+  for(i=0;i<10;i++){
+    for(j=0;j<100;j++){
+      sprintf(fileName,"%01d-%02d.dat",i,j);
+      fp=fopen(fimeName,"r");
+      readfile(fp,&w,&h,&A);
+
+  return;
+}
+
+void readfile(FILE *fp,int *w,int *h,int *A){
+  int i,j;
+  int tmp;
+  fscanf(fp,"%d",&w);
+  fscanf(fp,"%d",&h);
+  A=(int**)malloc(h*sizeof(int*));
+  for(i=0;i<h;i++)
+    A[i]=(int*)malloc(w*sizeof(int));
+  for(i=0;i<h;i++){
+    for(j=0;j<w;j++){
+      fscanf(fp,"%d",&tmp);
+      A[i][j]=tmp;
+    }
+  }
+}
+
+void normalization(int **A,int **B){
+}
