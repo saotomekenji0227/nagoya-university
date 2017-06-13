@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define NORMAL 4
+#define NORMAL 9
 #define MAX 1000
 
 void normalization(int A[][MAX],int B[NORMAL][NORMAL],int w,int h,int normal);

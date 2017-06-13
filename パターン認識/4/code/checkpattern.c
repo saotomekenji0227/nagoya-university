@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define N 100 //学習データの個数
 #define N2 100 //テストデータの個数
-#define MAX 1000
+#define MAX 100
 #define C 10
 void readfile(FILE *fp,int *w,int *h,int A[MAX][MAX]);
 void checkpattern(int confusion[C][C],unsigned int test[MAX][MAX],int proto[C][MAX][MAX],int w,int h,int p);
@@ -36,7 +36,7 @@ int main(int argc,char *argv[]){
 	fprintf(fp,"%d ",confusion[i][j]);
       }
       fprintf(fp,"\n");
-    }
+      }
   return 0;
 }
 void checkpattern(int confusion[C][C],unsigned int test[MAX][MAX],int proto[C][MAX][MAX],int w,int h,int p){
@@ -55,7 +55,7 @@ void checkpattern(int confusion[C][C],unsigned int test[MAX][MAX],int proto[C][M
       min=i;
     }
   }
-  confusion[p][i]++;
+  confusion[p][min]++;
   return 0;
 }
 
