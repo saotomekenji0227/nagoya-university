@@ -1,11 +1,7 @@
 #include<stdio.h>
+#include "glucksman.h"
 #define MAX 1000
 
-typedef struct {
-  unsigned int **data;
-  int width;
-  int hight;
-} MojiData;
 
 void readfile(FILE *fp,MojiData *mojiData);
 void writefile(FILE *fp,MojiData *mojiData);
@@ -16,21 +12,27 @@ void main(int argc,char *argv[]){
   MojiData sum;
   FILE *fp;
   char fileName[256];
+  int vector[ELM_SIZE];
   fp=fopen("normal0-00.dat","r");
   readfile(fp,&sum);
   fclose(fp);
   for(i=0;i<10;i++){
-    for(j=0;j<sum.hight;j++)
+    for(j=0;j<sum.height;j++)
       for(k=0;k<sum.width;k++)
 	sum.data[j][k]=0;
     for(j=0;j<100;j++){
       sprintf(fileName,"normal%01d-%02d.dat",i,j);
       fp=fopen(fileName,"r");
       readfile(fp,&mojiData);
-      for(k=0;k<sum.hight;k++)
+      fclose(fp);
+      getGlucksmanVector(&mojiData,vector);
+
+      for(k=0;k<sum.height;k++)
       	for(l=0;l<sum.width;l++)
 	  sum.data[k][l]+=mojiData.data[k][l];
-      fclose(fp);
+      for(k=0;k<mojiData.height;k++)
+	free(mojiData.data[k]);
+      free(mojiData.data);
     }
     sprintf(fileName,"proto%01d.dat",i);
     fp=fopen(fileName,"w");
@@ -42,13 +44,13 @@ void main(int argc,char *argv[]){
 void readfile(FILE *fp,MojiData *mojiData){
   int i,j;
   int tmp;
-  fscanf(fp,"%d",mojiData->width);
-  fscanf(fp,"%d",mojiData->hight);
-  mojiData->data=(unsigned int**)malloc(mojiData->hight*sizeof(int*));
-  for(i=0;i<mojiData->hight;i++){
+  fscanf(fp,"%d",&(mojiData->width));
+  fscanf(fp,"%d",&(mojiData->height));
+  mojiData->data=(unsigned int**)malloc(mojiData->height*sizeof(int*));
+  for(i=0;i<mojiData->height;i++){
     mojiData->data[i]=(unsigned int*)malloc(mojiData->width*sizeof(int));
   }
-  for(i=0;i<mojiData->hight;i++){
+  for(i=0;i<mojiData->height;i++){
     for(j=0;j<mojiData->width;j++){
       fscanf(fp,"%d",&tmp);
       mojiData->data[i][j]=tmp;
@@ -58,8 +60,8 @@ void readfile(FILE *fp,MojiData *mojiData){
 
 void writefile(FILE *fp,MojiData *mojiData){
   int i,j;
-  fprintf(fp,"%d %d\n",mojiData->width,mojiData->hight);
-  for(i=0;i<mojiData->hight;i++){
+  fprintf(fp,"%d %d\n",mojiData->width,mojiData->height);
+  for(i=0;i<mojiData->height;i++){
     for(j=0;j<mojiData->width;j++){
       fprintf(fp,"%d ",mojiData->data[i][j]);
     }

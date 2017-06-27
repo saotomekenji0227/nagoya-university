@@ -24,9 +24,9 @@ int main()
   A[0][0]=1;
   for(i=0;i<N;i++){
     for(j=0;j<N;j++){
-      printf("%.0f ",A[i][j]);
+      printf("%.0f &",A[i][j]);
     }
-    printf("%.2f\n",b[i]);
+    printf("%.0f &\\\\\n",b[i]);
   }
   LU(A);
   for(i=0;i<N;i++){
@@ -39,7 +39,7 @@ int main()
   }
   for(i=0;i<N;i++){
     for(j=0;j<N;j++){
-      printf("%.3f ",x[i][j]);
+      printf("%.3f &",x[i][j]);
     }
     printf("\n");
   }

@@ -38,10 +38,10 @@ int main()
   printf("U\n");
   for(i=0;i<N;i++){
     for(j=0;j<N;j++){
-      if(i>j) printf("0.00000 ");
-      else printf("%.5f ",A[i][j]);
+      if(i>j) printf("0.00000 &");
+      else printf("%.5f &",A[i][j]);
     }
-    printf("\\nonumber\\\\\n");
+    printf("\\\\\n");
   }
   zensin(A,y,b);
   koutai(A,y,x);

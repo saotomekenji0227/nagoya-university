@@ -1,7 +1,13 @@
 #include<stdio.h>
-#include "glucksman.h"
+
+
 #define MAX 1000
 
+typedef struct {
+  unsigned int **data;
+  int width;
+  int height;
+} MojiData;
 
 void readfile(FILE *fp,MojiData *mojiData);
 void writefile(FILE *fp,MojiData *mojiData);
@@ -12,7 +18,6 @@ void main(int argc,char *argv[]){
   MojiData sum;
   FILE *fp;
   char fileName[256];
-  int vector[ELM_SIZE];
   fp=fopen("normal0-00.dat","r");
   readfile(fp,&sum);
   fclose(fp);
@@ -25,11 +30,9 @@ void main(int argc,char *argv[]){
       fp=fopen(fileName,"r");
       readfile(fp,&mojiData);
       fclose(fp);
-      getGlucksmanVector(&mojiData,vector);
-
       for(k=0;k<sum.height;k++)
       	for(l=0;l<sum.width;l++)
-	  sum.data[k][l]+=mojiData.data[k][l];
+	  sum.data[k][l]+=mojiData[k][l];
       for(k=0;k<mojiData.height;k++)
 	free(mojiData.data[k]);
       free(mojiData.data);
