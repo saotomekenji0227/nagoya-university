@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+
+typedef struct {
+  double **data;
+  int datanum;
+  int C;
+} Data;
+
+void main(int argc,char *argv[]){
+  char *w1file = argv[1];
+  char *w2file = argv[2];
+  FILE *fp;
+  double m1[MAX],m2[MAX];
+  
+}
+

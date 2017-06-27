@@ -1,0 +1,47 @@
+\documentclass[]{jsarticle}
+\usepackage{amsmath}
+\usepackage{comment}
+\title{第10回数値解析演習}
+\author{081531257,早乙女 献自}
+\date{}
+\begin{document}
+\maketitle
+課題1 Jacobi法、Gauss-Seidel法
+\begin{eqnarray}
+\left(
+\begin{array}{rrr}
+  7&-2&1\\
+  　&　&　\\
+  -1&-5&-2\\
+  　&　&　\\
+  -2&-1&6
+\end{array}
+\right)
+\left(
+\begin{array}{r}
+  x_1\\\\x_2\\\\x_3
+\end{array}
+\right)
+ = 
+\left(
+\begin{array}{r}
+  6\\\\3\\\\14
+\end{array}
+\right)
+\nonumber
+\end{eqnarray}
+\noindent
+(1)上記連立方程式似ついて、Jacobi法とGauss-Seidel法の漸化式を導出した。以下に示す。
+
+Jacobi法
+\begin{eqnarray}
+\left\{
+\begin{array}{r}
+x_1^{(k+1)}=\frac{1}{7}(6+2x_2^{(k)}-x_3^{(k)})\\\\
+x_2^{(k+1)}=\frac{1}{5}(3+x_1^{(k)}-x+2x_3^{(k)})\\\\
+x_1^{(k+1)}=\frac{1}{6}(14+2x_1^{(k)}-6x_3^{(k)})
+\end{array}{r}
+\right.
+\nonumber
+\end{eqnarray}
+\end{document}
