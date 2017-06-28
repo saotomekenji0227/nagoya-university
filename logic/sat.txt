@@ -1,2 +1,20 @@
 SAT
 -1 -2 3 -4 5 -6 -7 -8 -9 -10 -11 12 -13 14 -15 -16 0
+
+iced08.ice.nuie.nagoya-u.ac.jp{af0957750}49: minisat sat.cnf sat.txt
+==================================[MINISAT]===================================
+| Conflicts |     ORIGINAL     |              LEARNT              | Progress |
+|           | Clauses Literals |   Limit Clauses Literals  Lit/Cl |          |
+==============================================================================
+|         0 |      80      168 |      26       0        0     nan |  0.000 % |
+==============================================================================
+restarts              : 1
+conflicts             : 3              (inf /sec)
+decisions             : 12             (inf /sec)
+propagations          : 40             (inf /sec)
+conflict literals     : 7              (0.00 % deleted)
+Memory used           : 2.73 MB
+CPU time              : 0 s
+
+SATISFIABLE
+
