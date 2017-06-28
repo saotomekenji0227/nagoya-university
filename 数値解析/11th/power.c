@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <math.h>
+#define DIV 6
+#define EPS 1E-6
+double power(double A[DIV][DIV],double x[DIV],double tmp[DIV]);
+void product(double A[DIV][DIV],double x[DIV],double tmp[DIV]);
+void main(){
+  double A[DIV][DIV]={{6,5,4,3,2,1},{5,5,4,3,2,1},{4,4,4,3,2,1},{3,3,3,3,2,1},{2,2,2,2,2,1},{1,1,1,1,1,1}};
+  double x[DIV],tmp[DIV];
+  int i,j;
+  for(i=0;i<DIV;i++)
+    x[i]=1;
+  printf("%f\n",power(A,x,tmp));
+  return;
+}
+
+double power(double A[DIV][DIV],double x[DIV],double tmp[DIV]){
+  double r=-999,rtmp;
+  double m,c;
+  int i;
+  while(1){
+    product(A,x,tmp);
+    m=0; c=0;
+    for(i=0;i<DIV;i++){
+      c+=x[i]*tmp[i];
+      m+=x[i]*x[i];
+      x[i]=tmp[i];
+    }
+    rtmp=c/m;
+    if(fabs(r-rtmp)<EPS) break;
+    r=rtmp;
+  }
+  return r;
+}
+
+void product(double A[DIV][DIV],double x[DIV],double tmp[DIV]){
+  int i,j;
+  for(i=0;i<DIV;i++){
+    tmp[i]=0;
+    for(j=0;j<DIV;j++)
+      tmp[i]+=A[i][j]*x[j];
+  }
+}

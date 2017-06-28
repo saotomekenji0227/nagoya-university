@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <math.h>
+
+#define DIV 6
+#define EPS 1E-6
+void power(double A[DIV][DIV],double x[DIV]);
+double product(double A[DIV][DIV],double x[DIV]);
+void main(){
+  double A[DIV][DIV];
+  double x[DIV];
+  int i,j;
+  for(i=0;i<DIV;i++){
+    for(j=0;j<DIV;j++)
+      A[i][j]=6-j;
+    x[i]=1;
+  }
+  power(A,x);
+  for(i=0;i<DIV;i++)
+      printf("%f ",x[i]);
+  printf("\n")
+  return;
+}
+
+void power(double A[DIV][DIV],double x[DIV]){
+  while(fabs(product(A,x))<EPS);
+  return;
+}
+
+double product(double A[DIV][DIV],double x[DIV]){
+  int i,j;
+  double tmp[DIV];
+  for(i=0;i<DIV;i++){
+    tmp[i]=0;
+    for(j=0;j<DIV;j++)
+      tmp[i]+=A[i][j]*x[j];
+  }
+  int max=0;
+  for(i=0;i<DIV;i++){
+    if(fabs(tmp[i]-x[i])>fabs(max))
+      max=tmp[i]-x[i];
+    x[i]=tmp[i];
+  }
+  return max;
+}
