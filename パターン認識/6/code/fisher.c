@@ -15,7 +15,7 @@ void solveAverage(Class *class);
 void solveChangeMatrix(Class *class);
 
 void main(int argc,char *argv[]){
-  int i;
+  int i,j;
   char *w1file = argv[1];
   char *w2file = argv[2];
   Class w1,w2;
@@ -23,12 +23,17 @@ void main(int argc,char *argv[]){
   readFile(w2file,&w2);
   solveAverage(&w1);
   solveAverage(&w2);
+  solveChangeMatrix(&w1);
+  solveChangeMatrix(&w2);
+  double **mat,**tmp,**inv;
   /*
   for(i=0;i<w1.div;i++)
     printf("%lf ",w1.average[i]);
   printf("\n");
   for(i=0;i<w1.div;i++)
-    printf("%lf ",w2.average[i]);
+    for(j=0;j<w1.div;j++)
+      printf("%lf ",w1.S[i][j]);
+  printf("\n");
   */
   return;
 }
@@ -40,7 +45,7 @@ void readFile(char *fileName,Class *class){
   fscanf(fp,"%d",&(class->datanum));
   fscanf(fp,"%d",&(class->div));
   class->data=(double**)malloc(class->datanum*sizeof(double*));
-  class->S=(double**)malloc(class->datanum*sizeof(double*));
+  class->S=(double**)malloc(class->div*sizeof(double*));
   class->average=(double*)calloc(class->div,sizeof(double));
   for(i=0;i<class->datanum;i++){
     class->data[i]=(double*)malloc(class->div*sizeof(double));
@@ -66,10 +71,13 @@ void solveAverage(Class *class){
 }
 
 void solveChangeMatrix(Class *class){
-  double difAvg[class->div][class->div];
-  for(i=0;i<class->div;i++)
-    for(j=0;j<class->div;j++)
-      difAvg[i][j]=class->data[i][j];
- 
+  int i,j,k;
+  for(i=0;i<class->datanum;i++){
+    for(j=0;j<class->div;j++){
+      for(k=0;k<class->div;k++){
+	class->S[j][k]+=(class->data[i][j]-class->average[j])*(class->data[i][k]-class->average[k]);
+      }
+    }
+  } 
   return;
 }
