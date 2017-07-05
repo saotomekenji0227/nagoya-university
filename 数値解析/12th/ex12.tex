@@ -1,0 +1,40 @@
+\documentclass[]{jsarticle}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{here}
+\title{第12回数値解析演習}
+\author{081531257,早乙女 献自}
+\date{}
+\begin{document}
+\maketitle
+課題1 ホイン法\\
+\begin{eqnarray}
+\left\{
+\begin{array}{l}
+  \frac{dS}{dt} = -\beta SI\\\\
+  \frac{dI}{dt} = \beta SI-\gamma I\\\\
+  \frac{dR}{dt} = \gamma I 
+\end{array}
+\right.
+\nonumber
+\end{eqnarray}
+上記の連立微分方程式についてその解をホイン法で求めた。\\
+但し、$\beta = 0.0015,\gamma = 0.9$とし、$\delta t = 0.01$で求めた。\\
+また、初期値は$t = 0$で$S = 1000,I = 1,R = 0$とした。\\
+結果をプロットしたグラフを別紙に示す。\\
+課題2 Runge-Kutta法\\
+\begin{eqnarray}
+\left\{
+\begin{array}{l}
+  \frac{dx}{dt} = -\sigma x + \sigma y\\\\
+  \frac{dy}{dt} = -xy + rx - y\\\\
+  \frac{dz}{dt} = xy - bz
+\end{array}
+\right.
+\nonumber
+\end{eqnarray}
+上記の連立微分方程式についてその解をRunge-Kutta法で求めた。\\
+但し、$\sigma = 10.0,r = 28.0,b = \frac{8}{3}$とし、$\delta t = 0.001$で求めた。\\
+また、初期値は$t = 0$で$x =1,y = 1,z = 1$とした。\\
+結果をプロットしたグラフを別紙に示す。\\
+\end{document}
