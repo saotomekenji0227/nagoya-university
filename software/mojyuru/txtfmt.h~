@@ -1,0 +1,9 @@
+void macro();
+void initheader(char *filename);
+int linehead(int linenum);
+void LEX(int filetype,FILE *infile);
+enum {OK_EXIT,ERR_EXIT};
+enum {CODE,TEXT};
+enum {MOJIFIRST = 0, LINEFIRST = 0};
+enum {MOJIMAX = 60, LINEMAX = 85};
+enum {HALF,FULL,TAB,BR,FF};
