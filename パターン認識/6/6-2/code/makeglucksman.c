@@ -2,8 +2,6 @@
 #include<math.h>
 
 #include "glucksman.h"
-#define MAX 1000
-
 
 void readfile(FILE *fp,MojiData *mojiData);
 void writefile(FILE *fp,MojiData *mojiData);
@@ -39,7 +37,6 @@ void main(int argc,char *argv[]){
       if(j==0)
 	makeGlucksmanHeader(fileName,100,ELM_SIZE);
       writeGlucksmanVector(fileName,&glucksman);
-      fclose(fp);
     }
   }
   
@@ -68,7 +65,7 @@ void writefile(FILE *fp,MojiData *mojiData){
   fprintf(fp,"%d %d\n",mojiData->width,mojiData->height);
   for(i=0;i<mojiData->height;i++){
     for(j=0;j<mojiData->width;j++){
-      fprintf(fp,"%.0f ",mojiData->data[i][j]);
+      fprintf(fp,"%.0lf ",mojiData->data[i][j]);
     }
     fprintf(fp,"\n");
   }
@@ -78,10 +75,9 @@ void writeGlucksmanVector(char* fileName,MojiData *mojiData){
   FILE *fp;
   int i,j;
   fp = fopen(fileName,"a");
-  printf("%d",mojiData->height);
   for( i = 0; i < mojiData->height ;i++ ){
-    for( i = 0; i < mojiData->width ;j++ ){
-      fprintf(fp,"%d ",mojiData->data[i][j]);
+    for( j = 0; j < mojiData->width ;j++ ){
+      fprintf(fp,"%.0lf ",mojiData->data[i][j]);
     }
   }
   fprintf(fp,"\n");
