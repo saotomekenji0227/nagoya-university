@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "glucksman.h"
+#define EPS 1.0E-6
 
 typedef struct {
   double **data;
@@ -21,62 +22,46 @@ void multiMatrixVector(double** mat,double* vector,int n);
 void normalizeVector(double* vector,int n);
 void multiVector(double* v1,double* v2,double* v3,int n);
 void printVector(char *fileName,double* vector,int div,char* mode);
+void dimensionReduction(Class *class1,Class *class2);
 
 void main(int argc,char *argv[]){
   int i,j;
-  char *w1file = argv[1];
-  char *w2file = argv[2];
-  char *write1 = argv[3];
-  char *write2 = argv[4];
   Class w1,w2;
-  readFile(w1file,&w1);
-  readFile(w2file,&w2);
-  solveAverage(&w1);
-  solveAverage(&w2);
-  solveChangeMatrix(&w1);
-  solveChangeMatrix(&w2);
+  char fileName[256];
+  for(i = 0; i < 10; i++){
+    for(j = i+1 ; j < 10; j++){
+      sprintf(fileName,"glucksman%01d.dat",i);
+      readFile(fileName,&w1);
+      sprintf(fileName,"glucksman%01d.dat",j);
+      readFile(fileName,&w2);
+      dimensionReduction(&w1,&w2);
+      solveAverage(&w1);
+      solveAverage(&w2);
+      solveChangeMatrix(&w1);
+      solveChangeMatrix(&w2);
 
-  double **mat,**tmat,**inv;
-  mat = (double**)malloc(w1.div*sizeof(double*));
-  tmat = (double**)malloc(w1.div*sizeof(double*));
-  inv = (double**)malloc(w1.div*sizeof(double*));
-  for(i = 0; i < w1.div ;i++){
-    mat[i] = (double*)calloc(w1.div,sizeof(double));
-    tmat[i] = (double*)calloc(w1.div,sizeof(double));
-    inv[i] = (double*)calloc(w1.div,sizeof(double));
-  }
-
-  addMatrix(w1.S,w2.S,mat,w1.div,w1.div);
-  addMatrix(w1.S,w2.S,tmat,w1.div,w1.div);
-  inverse(tmat,inv,w1.div);
-  for(i = 0; i < w1.div ;i++)
-    free(tmat[i]);
-  free(tmat);
-  double *A;
-  A = (double*)malloc(w1.div*sizeof(double));
-  subVector(w1.average,w2.average,A,w1.div);
-  multiMatrixVector(inv,A,w1.div);
-  normalizeVector(A,w1.div);
-  double *tmpv;
-  tmpv = (double*)malloc(w1.div*sizeof(double));
-  
-  for(i = 0; i < w1.datanum; i++){
-    for(j = 0;j < w1.div; j++)
-      tmpv[j] = w1.data[i][j];
-    multiVector(tmpv,A,tmpv,w1.div);
-    if(i==0)
-      printVector(write1,tmpv,w1.div,"w");
-    else
-      printVector(write1,tmpv,w1.div,"a");
-  }
-  for(i = 0; i < w2.datanum; i++){
-    for(j = 0;j < w2.div; j++)
-      tmpv[j] = w2.data[i][j];
-    multiVector(tmpv,A,tmpv,w2.div);
-    if(i==0)
-      printVector(write2,tmpv,w2.div,"w");
-    else
-      printVector(write2,tmpv,w2.div,"a");
+      double **mat,**tmat,**inv;
+      mat = (double**)malloc(w1.div*sizeof(double*));
+      tmat = (double**)malloc(w1.div*sizeof(double*));
+      inv = (double**)malloc(w1.div*sizeof(double*));
+      for(i = 0; i < w1.div ;i++){
+	mat[i] = (double*)calloc(w1.div,sizeof(double));
+	tmat[i] = (double*)calloc(w1.div,sizeof(double));
+	inv[i] = (double*)calloc(w1.div,sizeof(double));
+      }
+      
+      addMatrix(w1.S,w2.S,mat,w1.div,w1.div);
+      addMatrix(w1.S,w2.S,tmat,w1.div,w1.div);
+      inverse(tmat,inv,w1.div);
+      for(i = 0; i < w1.div ;i++)
+	free(tmat[i]);
+      free(tmat);
+      double *A;
+      A = (double*)malloc(w1.div*sizeof(double));
+      subVector(w1.average,w2.average,A,w1.div);
+      multiMatrixVector(inv,A,w1.div);
+      normalizeVector(A,w1.div);
+    }
   }
   return;
 }
@@ -220,5 +205,72 @@ void printVector(char *fileName,double* vector,int div, char* mode){
     fprintf(fp,"%lf ",vector[i]);
   fprintf(fp,"\n");
   fclose(fp);
+  return;
+}
+
+void dimensionReduction(Class *class1,Class *class2){
+
+  if( class1->div != class2->div || class1->datanum != class2->datanum ){
+    printf("次元かデータ数が違う\n");
+    return;
+  }
+
+  double **tmp1,**tmp2;
+  int *flag;
+  int i,j;
+  int count = 0,count2 = 0;
+
+  flag = (double*)calloc(class1->datanum,sizeof(int));
+  tmp1 = (double**)malloc(class1->datanum * sizeof(double*));
+  tmp2 = (double**)malloc(class2->datanum * sizeof(double*));
+  for(i = 0; i < class1->datanum; i++ ){
+    tmp1[i] = (double*)malloc(class1->div * sizeof(double));
+    tmp2[i] = (double*)malloc(class2->div * sizeof(double));
+  }
+  for(i = 0; i < class1-> datanum; i++){
+    for(j = 0; j < class1 -> div; j++){
+      tmp1[i][j] = class1 -> data[i][j];
+      tmp2[i][j] = class2 -> data[i][j];
+    }
+  }
+  for(i = 0; i < class1->div; i++){
+    if( fabs(tmp1[0][i] - tmp2[0][i]) > EPS )
+      continue;
+    for( j = 1 ; j < class1->datanum; j++){
+      if( fabs(tmp1[0][i] - tmp1[j][i]) > EPS )
+	continue;
+      if( fabs(tmp2[0][i] - tmp2[j][i]) > EPS )
+	continue;
+    }
+    flag[i] = 1;
+    count++;
+  }
+
+  if( count == 0 ) return;
+
+  for(i = 0; i < datanum i++){
+    free(class1->data[i]);
+    free(class2->data[i]);
+  }
+  free(class1->data);
+  free(class2->data);
+
+  class1->data = (double**)malloc(count * sizeof(double*));
+  class2->data = (double**)malloc(count * sizeof(double*));
+  for(i = 0; i < count; i++ ){
+    class1->data[i] = (double*)malloc(class1->div * sizeof(double));
+    class2->data[i] = (double*)malloc(class2->div * sizeof(double));
+  }
+
+  for(i = 0; i = class1->datanum; i++){
+    if( flag[i] == 0 ) continue;
+    for(j = 0; j = class1->div; j++){
+      class1->data[count2][j] = tmp1[i][j];
+      class2->data[count2][j] = tmp2[i][j];
+    }
+    count2++;
+  }
+  class1 -> datanum = count;
+  class2 -> datanum = count;
   return;
 }
