@@ -1,0 +1,85 @@
+%!PS-Adobe-1.0
+%%Pages: (atend)
+%%BoundingBox: (atend)
+%%EndComments
+
+%
+% $Id: prologue.ps,v 1.7 1994/04/10 08:33:40 yamamoto Exp yamamoto $
+%
+
+% General macros.
+/curx {currentpoint pop} def
+/cury {currentpoint exch pop} def
+
+% Constans.		% Japanese character scale factor.
+/jscale 0.94 def
+
+% Commands.
+/n {			% - n -
+	sx cury dy sub moveto
+} def
+
+/f {			% - f -
+	showpage
+} def
+
+	/s {			% string font s -
+	dup K eq
+	{js}
+	{setfont show}
+	ifelse
+} def
+
+/js {			% string font js -
+	setfont
+	dw 0 rmoveto
+	dw 2 mul exch 0 exch ashow
+	dw neg 0 rmoveto
+} def
+
+% Initialization.
+/init {			% sx sy pt dy init -
+	gsave
+
+	/dy exch def
+	/pt exch def
+	/sy exch def
+	/sx exch def
+
+	fonts {
+		findfont pt scalefont def
+	} forall
+	jfonts {
+		findfont pt jscale mul scalefont def
+	} forall
+
+	% Dummy.
+	0 0 moveto
+
+	% Set character width.
+	C setfont
+	/asciiwidth (AA) stringwidth pop def
+	K setfont
+	/japanesewidth <2422> stringwidth pop def
+	/dw asciiwidth japanesewidth sub 2 div def
+
+	grestore
+} def
+
+% Default fonts.
+/fonts 3 dict def
+fonts begin
+	/B /Courier-Bold def			% Bold
+	/C /Courier def					% Courier
+end
+/jfonts 3 dict def
+jfonts begin
+	/K /Ryumin-Light-EUC-H def		% Kanji (Mincho-tai)
+end
+
+25 768 10 12 init
+/b {sx sy moveto} def
+%%EndProlog
+%%Page 1 1
+b
+(txt.txt) C s n(Page 1, 2017/07/13, SAOTOME Kenji) C s n n(   1:) C s 

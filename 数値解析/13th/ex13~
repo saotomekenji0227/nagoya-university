@@ -1,0 +1,18 @@
+#set term X11
+set term postscript portrait
+set output 'ex12.1.ps'
+set title "ex12.1.ps"  
+set size 1.0, 0.7
+set xlabel "x"
+set ylabel "y"
+set xtics  0 , 0.5
+set ytics  0 , 0.5
+set dgrid3d
+set nosurface
+set contour
+set cntrparam levels auto 10
+set view 0,0
+set zeroaxis
+splot "phi.dat" with lines
+#plot [0:35][0:1010] 'heunS.dat' title 'S' with dots,'heunI.dat' title 'I' with dots,'heunR.dat' title 'R' with dots,'heunSum.dat' title 'S+I+R' with dots
+#plot [-4:4][-5:5] 'data1.dat' title 'data 1' with points,'data2.dat' title 'data 2' with points 

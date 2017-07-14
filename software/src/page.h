@@ -1,0 +1,1 @@
+void header(int pagenum);

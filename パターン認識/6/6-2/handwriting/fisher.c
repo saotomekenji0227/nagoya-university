@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "glucksman.h"
 #define EPS 1.0E-6
 
 typedef struct {
@@ -18,16 +17,19 @@ void solveChangeMatrix(Class *class);
 void addMatrix(double** A,double** B,double** C,int n,int m);
 void inverse(double** mat, double** inv, int n);
 void subVector(double* v1, double* v2, double* v3,int n);
-void multiMatrixVector(double** mat,double* vector,int n);
+void multiMatrixVector(double** mat,double* vector1,double* vector2,int n);
 void normalizeVector(double* vector,int n);
 void multiVector(double* v1,double* v2,double* v3,int n);
 void printVector(char *fileName,double* vector,int div,char* mode);
 void dimensionReduction(Class *class1,Class *class2);
+double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A);
+void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf);
 
 void main(int argc,char *argv[]){
-  int i,j;
+  int i,j,k;
   Class w1,w2;
   char fileName[256];
+  double J[10][10];
   for(i = 0; i < 10; i++){
     for(j = i+1 ; j < 10; j++){
       sprintf(fileName,"glucksman%01d.dat",i);
@@ -39,28 +41,29 @@ void main(int argc,char *argv[]){
       solveAverage(&w2);
       solveChangeMatrix(&w1);
       solveChangeMatrix(&w2);
-
-      double **mat,**tmat,**inv;
-      mat = (double**)malloc(w1.div*sizeof(double*));
+      double **Sw,**tmat,**inv;
+      Sw = (double**)malloc(w1.div*sizeof(double*));
       tmat = (double**)malloc(w1.div*sizeof(double*));
       inv = (double**)malloc(w1.div*sizeof(double*));
-      for(i = 0; i < w1.div ;i++){
-	mat[i] = (double*)calloc(w1.div,sizeof(double));
-	tmat[i] = (double*)calloc(w1.div,sizeof(double));
-	inv[i] = (double*)calloc(w1.div,sizeof(double));
+      for(k = 0; k < w1.div ;i++){
+	Sw[k] = (double*)calloc(w1.div,sizeof(double));
+	tmat[k] = (double*)calloc(w1.div,sizeof(double));
+	inv[k] = (double*)calloc(w1.div,sizeof(double));
       }
-      
-      addMatrix(w1.S,w2.S,mat,w1.div,w1.div);
+      addMatrix(w1.S,w2.S,Sw,w1.div,w1.div);
       addMatrix(w1.S,w2.S,tmat,w1.div,w1.div);
+      /*
       inverse(tmat,inv,w1.div);
-      for(i = 0; i < w1.div ;i++)
-	free(tmat[i]);
+      for(k = 0; k < w1.div ;k++)
+	free(tmat[k]);
       free(tmat);
       double *A;
       A = (double*)malloc(w1.div*sizeof(double));
       subVector(w1.average,w2.average,A,w1.div);
-      multiMatrixVector(inv,A,w1.div);
+      multiMatrixVector(inv,A,A,w1.div);
       normalizeVector(A,w1.div);
+      solveFluctuationRadio(&w1,&w2,Sw,A);
+      */
     }
   }
   return;
@@ -163,16 +166,16 @@ void subVector(double* v1, double* v2, double* v3,int n){
   return;
 }
 
-void multiMatrixVector(double** mat,double* vector,int n){
+void multiMatrixVector(double** mat,double* vector1,double* vector2,int n){
   int i,j;
   double tmp[n];
   for(i = 0; i < n; i++){
     tmp[i] = 0;
     for(j = 0; j < n; j++)
-      tmp[i] += mat[i][j]*vector[j];
+      tmp[i] += mat[i][j]*vector1[j];
   }
   for(i = 0; i < n; i++)
-    vector[i] = tmp[i];
+    vector2[i] = tmp[i];
   return;
 }
 
@@ -216,11 +219,10 @@ void dimensionReduction(Class *class1,Class *class2){
   }
 
   double **tmp1,**tmp2;
-  int *flag;
+  int *flag,cflag = 0;;
   int i,j;
   int count = 0,count2 = 0;
-
-  flag = (double*)calloc(class1->datanum,sizeof(int));
+  flag = (int*)calloc(class1->div,sizeof(int));
   tmp1 = (double**)malloc(class1->datanum * sizeof(double*));
   tmp2 = (double**)malloc(class2->datanum * sizeof(double*));
   for(i = 0; i < class1->datanum; i++ ){
@@ -236,41 +238,74 @@ void dimensionReduction(Class *class1,Class *class2){
   for(i = 0; i < class1->div; i++){
     if( fabs(tmp1[0][i] - tmp2[0][i]) > EPS )
       continue;
+    cflag = 0;
     for( j = 1 ; j < class1->datanum; j++){
-      if( fabs(tmp1[0][i] - tmp1[j][i]) > EPS )
-	continue;
-      if( fabs(tmp2[0][i] - tmp2[j][i]) > EPS )
-	continue;
+      if( fabs(tmp1[0][i] - tmp1[j][i]) > EPS || fabs(tmp2[0][i] - tmp2[j][i]) > EPS){
+	cflag = 1;
+	break;
+      }
     }
+    if( cflag == 1 ) continue;
     flag[i] = 1;
     count++;
   }
-
   if( count == 0 ) return;
-
-  for(i = 0; i < datanum i++){
+  for(i = 0; i < class1->datanum; i++){
     free(class1->data[i]);
     free(class2->data[i]);
   }
-  free(class1->data);
-  free(class2->data);
-
-  class1->data = (double**)malloc(count * sizeof(double*));
-  class2->data = (double**)malloc(count * sizeof(double*));
-  for(i = 0; i < count; i++ ){
-    class1->data[i] = (double*)malloc(class1->div * sizeof(double));
-    class2->data[i] = (double*)malloc(class2->div * sizeof(double));
+  for(i = 0; i < class1->datanum; i++ ){
+    class1->data[i] = (double*)malloc((class1->div - count) * sizeof(double));
+    class2->data[i] = (double*)malloc((class2->div - count) * sizeof(double));
   }
-
-  for(i = 0; i = class1->datanum; i++){
-    if( flag[i] == 0 ) continue;
-    for(j = 0; j = class1->div; j++){
-      class1->data[count2][j] = tmp1[i][j];
-      class2->data[count2][j] = tmp2[i][j];
+  for(i = 0; i < class1->div; i++){
+    if(flag[i] == 1) continue;
+    for(j = 0; j < class1->datanum; j++){
+      class1->data[j][count2] = tmp1[j][i];
+      class2->data[j][count2] = tmp2[j][i];
     }
     count2++;
   }
-  class1 -> datanum = count;
-  class2 -> datanum = count;
+  class1->div -= count;
+  class2->div -= count;
+  return;
+}
+
+double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A){
+  int i;
+  double *tmp,*tmp2,**Sf;
+  double molecule = 0.;
+  double denominator = 0.;
+  Sf = (double**)malloc(class1->div * sizeof(double*));
+  for(i = 0; i < class1->div; i++)
+    Sf[i] = (double*)malloc(class1->div * sizeof(double));
+  tmp = (double*)malloc(class1->div * sizeof(double));
+  tmp2 = (double*)malloc(class1->div * sizeof(double));
+  solveClassChangeMatrix(class1,class2,Sf);
+  multiMatrixVector(Sf,A,tmp,class1->div);
+  multiVector(tmp,A,tmp2,class1->div);
+  for(i = 0; i < class1->div ;i++)
+    molecule += tmp2[i];
+  multiMatrixVector(Sw,A,tmp,class1->div);
+  multiVector(tmp,A,tmp2,class1->div);
+  for(i = 0; i < class1->div ;i++)
+    denominator += tmp2[i];
+  free(tmp);
+  for(i = 0; i < class1->div; i++)
+    free(Sf[i]);
+  free(Sf);
+  return molecule / denominator;
+}
+
+void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf){
+  int i,j;
+  double *tmp;
+  tmp = (double*)malloc(class1->div * sizeof(double));
+  subVector(class1->average,class2->average,tmp,class1->div);
+  for(i = 0; i < class1->div; i++){
+    for(j = 0; j < class1->div; j++){
+      Sf[i][j] = tmp[i] * tmp[j];
+    }
+  }
   return;
 }
