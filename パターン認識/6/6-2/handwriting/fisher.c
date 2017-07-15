@@ -26,10 +26,13 @@ double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A);
 void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf);
 
 void main(int argc,char *argv[]){
-  int i,j,k;
+  int i,j,k,l;
   Class w1,w2;
   char fileName[256];
   double J[10][10];
+  for( i = 0 ; i < 10 ; i++)
+    for( j = 0 ; j < 10; j++)
+      J[i][j] = 0;
   for(i = 0; i < 10; i++){
     for(j = i+1 ; j < 10; j++){
       sprintf(fileName,"glucksman%01d.dat",i);
@@ -37,6 +40,22 @@ void main(int argc,char *argv[]){
       sprintf(fileName,"glucksman%01d.dat",j);
       readFile(fileName,&w2);
       dimensionReduction(&w1,&w2);
+      /*
+      if(i ==0 && j == 1){
+	for( k = 0; k < w1.datanum ;k++ ){
+	  for( l = 0; l < w1.div ;l++){
+	    printf("%.0lf ",w1.data[k][l]);
+	  }
+	  printf("\n");
+	}
+	for( k = 0; k < w2.datanum ;k++ ){
+	  for( l = 0; l < w2.div ;l++){
+	    printf("%.0lf ",w2.data[k][l]);
+	  }
+	  printf("\n");
+	}
+      }
+      */
       solveAverage(&w1);
       solveAverage(&w2);
       solveChangeMatrix(&w1);
@@ -45,14 +64,13 @@ void main(int argc,char *argv[]){
       Sw = (double**)malloc(w1.div*sizeof(double*));
       tmat = (double**)malloc(w1.div*sizeof(double*));
       inv = (double**)malloc(w1.div*sizeof(double*));
-      for(k = 0; k < w1.div ;i++){
+      for(k = 0; k < w1.div ; k++){
 	Sw[k] = (double*)calloc(w1.div,sizeof(double));
 	tmat[k] = (double*)calloc(w1.div,sizeof(double));
 	inv[k] = (double*)calloc(w1.div,sizeof(double));
       }
       addMatrix(w1.S,w2.S,Sw,w1.div,w1.div);
       addMatrix(w1.S,w2.S,tmat,w1.div,w1.div);
-      /*
       inverse(tmat,inv,w1.div);
       for(k = 0; k < w1.div ;k++)
 	free(tmat[k]);
@@ -62,10 +80,16 @@ void main(int argc,char *argv[]){
       subVector(w1.average,w2.average,A,w1.div);
       multiMatrixVector(inv,A,A,w1.div);
       normalizeVector(A,w1.div);
-      solveFluctuationRadio(&w1,&w2,Sw,A);
-      */
+      J[i][j] = solveFluctuationRadio(&w1,&w2,Sw,A);
     }
   }
+  /*
+  for( i = 0 ; i < 10 ; i++){
+    for( j = 0 ; j < 10; j++)
+      printf("%lf ",J[i][j]);
+    printf("\n");
+  }
+  */
   return;
 }
 
