@@ -19,11 +19,13 @@ void inverse(double** mat, double** inv, int n);
 void subVector(double* v1, double* v2, double* v3,int n);
 void multiMatrixVector(double** mat,double* vector1,double* vector2,int n);
 void normalizeVector(double* vector,int n);
+double solveInnerProduct(double* v1,double* v2,int n);
 void multiVector(double* v1,double* v2,double* v3,int n);
 void printVector(char *fileName,double* vector,int div,char* mode);
 void dimensionReduction(Class *class1,Class *class2);
 double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A);
 void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf);
+void writeAnswer(Class *class1, Class *class2, double *A,int a,int b);
 
 void main(int argc,char *argv[]){
   int i,j,k,l;
@@ -81,15 +83,14 @@ void main(int argc,char *argv[]){
       multiMatrixVector(inv,A,A,w1.div);
       normalizeVector(A,w1.div);
       J[i][j] = solveFluctuationRadio(&w1,&w2,Sw,A);
+      writeAnswer(&w1,&w2,A,i,j);
     }
   }
-  /*
   for( i = 0 ; i < 10 ; i++){
     for( j = 0 ; j < 10; j++)
       printf("%lf ",J[i][j]);
     printf("\n");
   }
-  */
   return;
 }
 
@@ -221,6 +222,14 @@ void multiVector(double* v1,double* v2,double* v3,int n){
   return;
 }
 
+double solveInnerProduct(double* v1,double* v2,int n){
+  int i;
+  double y=0;;
+  for(i = 0; i < n; i++)
+    y += v1[i]*v2[i];
+  return y;
+}
+
 void printVector(char *fileName,double* vector,int div, char* mode){
   int i;
   FILE *fp;
@@ -332,4 +341,25 @@ void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf){
     }
   }
   return;
+}
+
+void writeAnswer(Class *class1, Class *class2, double *A,int a,int b){
+  char fileName[256];
+  FILE *fp;
+  int i,j;
+  double *tmp;
+  sprintf(fileName,"fisher%01d-%01d.dat",a,b);
+  fp = fopen(fileName,"w");
+  tmp = (double*)malloc(class1->div * sizeof(double));
+  for(i = 0; i < class1->datanum; i++){
+    for(j = 0; j < class1->div; j++)
+      tmp[j] = class1->data[i][j];
+    fprintf(fp,"%lf 0\n",solveInnerProduct(tmp,A,class1->div));
+  }
+  for(i = 0; i < class2->datanum; i++){
+    for(j = 0; j < class2->div; j++)
+      tmp[j] = class2->data[i][j];
+    fprintf(fp,"%lf 1\n",solveInnerProduct(tmp,A,class2->div));
+  }
+  fclose(fp);
 }

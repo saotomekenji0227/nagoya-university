@@ -1,0 +1,11 @@
+#set term X11
+set term postscript portrait
+set output 'fisher1-4.ps'
+set title "fisher1-4.ps"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set xtics  0 , 100
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher1-4.dat' with points 
