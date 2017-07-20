@@ -75,6 +75,7 @@ int main(int argc,char *argv[]){
     //LEXモジュールの呼び出し
     LEX(filetype,infile);
   }
+  printf("f\n");
   return OK_EXIT;
 
 }

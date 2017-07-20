@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "txtfmt.h"
 #include "count.h"
-void count(int moji){  
+void count(int moji){
   static int mojinum = 0; //文字数
   static int linenum = 1; //行数
   if( moji == FULL ){ //全角文字

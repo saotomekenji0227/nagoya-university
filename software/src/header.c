@@ -8,8 +8,8 @@
 
 #define FILEMAX 40
 
-static char *dating;
-static char *fileName;
+static char dating[15];
+static char fileName[45];
 static char *username;
 
 
@@ -34,7 +34,9 @@ void initheader(char *filename){
   f[i] = '\0';
 
   /* ファイル名を静的変数に格納 */
-  fileName = f;
+  for(i = 0; i <= 40; i++){
+    fileName[i] = f[i];
+  }
   
   /* ファイル名が40文字を超えたら"..."を出力 */
   if(len > 40){
@@ -52,9 +54,12 @@ void initheader(char *filename){
   /* 日付の書式変換 */
   strftime(s, FILEMAX, "%Y/%m/%d", t_st);
   /* 日付を静的変数に格納 */
-  dating = s;
+  for(i = 0; i < 10; i++){
+    dating[i] = s[i];
+  }
+
   /* ヘッダを出力 */
-  printf("%%%Page 1 1\nb\n");
+  printf("%%%%Page: 1 1\nb\n");
   printf("(%s) C s n(Page 1, %s, %s) C s n n", fileName, dating, username);
  
 }

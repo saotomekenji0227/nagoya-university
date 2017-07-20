@@ -14,40 +14,43 @@ void out(char *output, int mojitype)
     char c = *(output + i);//簡単のためにcに取り出した1文字を代入
 
     if(mojitype==K){//日本語のとき
-      void count(int FULL);
-      printf("(%c) K s ", c);
+      count(FULL);
+      printf("(%c",c);
+      ++i;
+      c = *(output + i);
+      printf("%c) K s ", c);
     }
 
     else if(mojitype==C){//英語のとき
-      void count(int HALF);
+      count(HALF);
       printf("(%c) C s ", c);
     }
 
     else if(mojitype==B){//予約語のとき
-      void count(int HALF);
+      count(HALF);
       printf("(%c) B s ", c);
     }
 
     else if(mojitype==E){//エスケープされる特殊文字のとき
-      void count(int HALF);
+      count(HALF);
       printf("(\\%c) C s ", c);
     }
 
     else if(mojitype==S){//空白のとき
-      void count(int HALF);
+      count(HALF);
       printf("(\\%c) C s ", c);
     }
 
     else if(mojitype==T){//タブのとき
-      void count(int TAB);
+      count(TAB);
     }
 
     else if(mojitype==L){//改行のとき
-      void count(int BR);
+      count(BR);
     }
 
     else if(mojitype==P){//改ページのとき
-      void count(int FF);
+      count(FF);
     }
 
   }

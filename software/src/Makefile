@@ -1,7 +1,7 @@
 PRG = txtfmt
 OBJ = count.o LEX.o tab.o header.o macro.o page.o line.o linehead.o out.o main.o
 
-CFLAGS  = -Wall -g -ll
+CFLAGS  = -Wall -g 
 LFLAGS	= -Wall
 
 CC = gcc
@@ -20,3 +20,4 @@ clean:
 	rm -f $(OBJ) $(PRG)
 	rm -f *~
 	rm -f LEX.c
+

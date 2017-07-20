@@ -80,6 +80,4 @@ end
 25 768 10 12 init
 /b {sx sy moveto} def
 %%EndProlog
-%%Page 1 1
-b
-(txt.txt) C s n(Page 1, 2017/07/13, SAOTOME Kenji) C s n n(   1:) C s 
+(stdin) C s n(Page 1, 2017/07/13, SAOTOME Kenji) C s n n   1:(a) C s (f) C s (j) C s (f) C s (o) C s (e) C s (a) C s (\ ) C s (f) C s (h) C s (o) C s (i) C s (e) C s (n) C s (f) C s (a) C s (k) C s (k) C s (k) C s (k) C s 
