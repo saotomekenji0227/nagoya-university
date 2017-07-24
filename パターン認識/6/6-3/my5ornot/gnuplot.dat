@@ -1,0 +1,720 @@
+#set term X11
+set terminal png
+set output 'fisher531257-130511.png'
+set title "fisher531257-130511.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-130511.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-131720.png'
+set title "fisher531257-131720.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-131720.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-231024.png'
+set title "fisher531257-231024.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-231024.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-330820.png'
+set title "fisher531257-330820.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-330820.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-331266.png'
+set title "fisher531257-331266.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-331266.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-331770.png'
+set title "fisher531257-331770.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-331770.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-430077.png'
+set title "fisher531257-430077.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-430077.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-430094.png'
+set title "fisher531257-430094.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-430094.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-430237.png'
+set title "fisher531257-430237.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-430237.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-430772.png'
+set title "fisher531257-430772.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-430772.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-430928.png'
+set title "fisher531257-430928.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-430928.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-431089.png'
+set title "fisher531257-431089.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-431089.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530038.png'
+set title "fisher531257-530038.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530038.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530058.png'
+set title "fisher531257-530058.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530058.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530071.png'
+set title "fisher531257-530071.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530071.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530085.png'
+set title "fisher531257-530085.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530085.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530110.png'
+set title "fisher531257-530110.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530110.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530124.png'
+set title "fisher531257-530124.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530124.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530130.png'
+set title "fisher531257-530130.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530130.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530141.png'
+set title "fisher531257-530141.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530141.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530148.png'
+set title "fisher531257-530148.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530148.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530153.png'
+set title "fisher531257-530153.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530153.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530159.png'
+set title "fisher531257-530159.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530159.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530172.png'
+set title "fisher531257-530172.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530172.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530198.png'
+set title "fisher531257-530198.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530198.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530230.png'
+set title "fisher531257-530230.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530230.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530236.png'
+set title "fisher531257-530236.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530236.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530257.png'
+set title "fisher531257-530257.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530257.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530283.png'
+set title "fisher531257-530283.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530283.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530291.png'
+set title "fisher531257-530291.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530291.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530299.png'
+set title "fisher531257-530299.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530299.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530313.png'
+set title "fisher531257-530313.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530313.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530320.png'
+set title "fisher531257-530320.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530320.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530355.png'
+set title "fisher531257-530355.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530355.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530375.png'
+set title "fisher531257-530375.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530375.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530403.png'
+set title "fisher531257-530403.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530403.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530409.png'
+set title "fisher531257-530409.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530409.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530415.png'
+set title "fisher531257-530415.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530415.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530439.png'
+set title "fisher531257-530439.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530439.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530447.png'
+set title "fisher531257-530447.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530447.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530468.png'
+set title "fisher531257-530468.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530468.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530474.png'
+set title "fisher531257-530474.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530474.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530507.png'
+set title "fisher531257-530507.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530507.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530528.png'
+set title "fisher531257-530528.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530528.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530545.png'
+set title "fisher531257-530545.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530545.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530566.png'
+set title "fisher531257-530566.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530566.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530609.png'
+set title "fisher531257-530609.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530609.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530630.png'
+set title "fisher531257-530630.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530630.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530636.png'
+set title "fisher531257-530636.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530636.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530659.png'
+set title "fisher531257-530659.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530659.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530696.png'
+set title "fisher531257-530696.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530696.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530702.png'
+set title "fisher531257-530702.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530702.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530735.png'
+set title "fisher531257-530735.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530735.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530753.png'
+set title "fisher531257-530753.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530753.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530789.png'
+set title "fisher531257-530789.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530789.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530810.png'
+set title "fisher531257-530810.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530810.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530882.png'
+set title "fisher531257-530882.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530882.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530896.png'
+set title "fisher531257-530896.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530896.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530917.png'
+set title "fisher531257-530917.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530917.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530964.png'
+set title "fisher531257-530964.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530964.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-530972.png'
+set title "fisher531257-530972.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-530972.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531012.png'
+set title "fisher531257-531012.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531012.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531032.png'
+set title "fisher531257-531032.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531032.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531040.png'
+set title "fisher531257-531040.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531040.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531080.png'
+set title "fisher531257-531080.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531080.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531097.png'
+set title "fisher531257-531097.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531097.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531109.png'
+set title "fisher531257-531109.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531109.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531124.png'
+set title "fisher531257-531124.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531124.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531144.png'
+set title "fisher531257-531144.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531144.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531151.png'
+set title "fisher531257-531151.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531151.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531170.png'
+set title "fisher531257-531170.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531170.dat' with points
+#set term X11
+set terminal png
+set output 'fisher531257-531246.png'
+set title "fisher531257-531246.png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'fisher531257-531246.dat' with points

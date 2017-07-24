@@ -24,9 +24,8 @@ void multiVector(double* v1,double* v2,double* v3,int n);
 void printVector(char *fileName,double* vector,int div,char* mode);
 void dimensionReduction(Class *class1,Class *class2);
 double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A);
-void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf);
+void solveClassChangeMatrix(Class *class1,Class *class2,double **Sb);
 void writeAnswer(Class *class1, Class *class2, double *A,int a,int b);
-
 void main(int argc,char *argv[]){
   int i,j,k,l;
   Class w1,w2;
@@ -81,8 +80,8 @@ void main(int argc,char *argv[]){
       A = (double*)malloc(w1.div*sizeof(double));
       subVector(w1.average,w2.average,A,w1.div);
       multiMatrixVector(inv,A,A,w1.div);
-      normalizeVector(A,w1.div);
       J[i][j] = solveFluctuationRadio(&w1,&w2,Sw,A);
+      normalizeVector(A,w1.div);
       writeAnswer(&w1,&w2,A,i,j);
     }
   }
@@ -306,16 +305,16 @@ void dimensionReduction(Class *class1,Class *class2){
 
 double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A){
   int i;
-  double *tmp,*tmp2,**Sf;
+  double *tmp,*tmp2,**Sb;
   double molecule = 0.;
   double denominator = 0.;
-  Sf = (double**)malloc(class1->div * sizeof(double*));
+  Sb = (double**)malloc(class1->div * sizeof(double*));
   for(i = 0; i < class1->div; i++)
-    Sf[i] = (double*)malloc(class1->div * sizeof(double));
+    Sb[i] = (double*)malloc(class1->div * sizeof(double));
   tmp = (double*)malloc(class1->div * sizeof(double));
   tmp2 = (double*)malloc(class1->div * sizeof(double));
-  solveClassChangeMatrix(class1,class2,Sf);
-  multiMatrixVector(Sf,A,tmp,class1->div);
+  solveClassChangeMatrix(class1,class2,Sb);
+  multiMatrixVector(Sb,A,tmp,class1->div);
   multiVector(tmp,A,tmp2,class1->div);
   for(i = 0; i < class1->div ;i++)
     molecule += tmp2[i];
@@ -325,19 +324,34 @@ double solveFluctuationRadio(Class *class1,Class *class2,double **Sw,double *A){
     denominator += tmp2[i];
   free(tmp);
   for(i = 0; i < class1->div; i++)
-    free(Sf[i]);
-  free(Sf);
+    free(Sb[i]);
+  free(Sb);
   return molecule / denominator;
 }
 
-void solveClassChangeMatrix(Class *class1,Class *class2,double **Sf){
+void solveClassChangeMatrix(Class *class1,Class *class2,double **Sb){
   int i,j;
-  double *tmp;
+  double *tmp,*m;
   tmp = (double*)malloc(class1->div * sizeof(double));
-  subVector(class1->average,class2->average,tmp,class1->div);
+  m = (double*)calloc(class1->div,sizeof(double));
+  for(i = 0; i < class1->datanum; i++)
+    for(j = 0; j < class1->div; j++)
+      m[j] += class1->data[i][j];
+  for(i = 0; i < class2->datanum; i++)
+    for(j = 0; j < class2->div; j++)
+      m[j] += class2->data[i][j];
+  for(i = 0; i < class1->div; i++)
+    m[i] /= (class1->datanum + class2->datanum);
+  subVector(class1->average,m,tmp,class1->div);
   for(i = 0; i < class1->div; i++){
     for(j = 0; j < class1->div; j++){
-      Sf[i][j] = tmp[i] * tmp[j];
+      Sb[i][j] = class1->datanum * tmp[i] * tmp[j];
+    }
+  }
+  subVector(class2->average,m,tmp,class2->div);
+  for(i = 0; i < class2->div; i++){
+    for(j = 0; j < class2->div; j++){
+      Sb[i][j] += class2->datanum * tmp[i] * tmp[j];
     }
   }
   return;
