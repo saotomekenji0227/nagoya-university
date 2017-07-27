@@ -30,8 +30,7 @@ int main(int argc,char *argv[]){
   char *filename;
   int filetype;
 
-  //macroの呼び出し
-  macro();
+
 
   //コマンドラインのチェック
   //引数が２つ以上ある場合エラーを出力
@@ -44,6 +43,8 @@ int main(int argc,char *argv[]){
   else if(argc==1){
     filename="stdin";
     filetype=TEXT;
+    //macroの呼び出し
+    macro();
     //ヘッダモジュールの呼び出し
     initheader(filename);
     //行番号モジュールの呼び出し
@@ -68,6 +69,8 @@ int main(int argc,char *argv[]){
     else{
       filetype=TEXT;
     }
+    //macroの呼び出し
+    macro();
     //ヘッダモジュールの呼び出し
     initheader(filename);
     //行番号モジュールの呼び出し

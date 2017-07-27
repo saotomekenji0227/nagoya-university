@@ -27,7 +27,7 @@ void initheader(char *filename){
   len = strlen(filename);
   
   /* 40文字目までを一時配列に格納 */
-  for(i = 0; i <= 40; i++){
+  for(i = 0; i < 40; i++){
     f[i] = *filename;
     filename++;
   }

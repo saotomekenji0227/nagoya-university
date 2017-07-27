@@ -1,0 +1,36 @@
+\documentclass[]{jsarticle}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{here}
+\title{要求仕様書}
+\author{}
+\date{}
+\begin{document}
+%\maketitle
+\noindent
+txtfmt\\\\
+名前\\
+　　　txtfmt - テキストをPostScriptの形式に変換して出力する。\\\\
+書式\\
+　　　txtfmt　[file]\\\\
+説明\\
+　　　txtfmtは引数にファイルを指定した場合、指定されたファイルを読み込み、テキストをPostScriptの\\
+　　　形式に変換して標準出力に出力する。指定されたファイルが.cファイルもしくは.hファイルの場合、予\\
+　　　約語を強調する。ファイルを指定しなかった場合、標準入力をPostScriptの形式に変換して標準出力\\
+　　　に出力する。\\
+　　　各ページのヘッダには1行目にファイル名、2行目にページ番号、日付、ユーザ名を出力する。ただし、\\
+　　　ファイル名は半角のみ受け付け、40文字まで出力する。標準入力を入力とした場合、ファイル名は\\
+　　　「stdin」となる。日付とユーザ名は使用PCに依存する。\\
+　　　本文において、1行には半角85文字、1ページには60行まで出力する。また、ユーザの改行に合わせ\\
+　　　て行番号を表示する。制御文字は、空白、タブ、改行、改ページのみを受け付ける。\\\\
+オプション\\
+　　　なし\\\\
+環境変数\\
+　　　なし\\\\
+関連項目\\
+　　　evince(1), lpr(1)\\\\
+バグ\\
+　　　現在バグは確認されていない。\\\\
+\begin{center}July 27, 2017\end{center}
+\begin{flushright}\vspace{-22pt}txtfmt\end{flushright}
+\end{document}

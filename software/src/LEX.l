@@ -6,8 +6,12 @@
 
 %}
 /* パターン */
+OUTC ({ASCII}|{MARK}|{RESERVE})
+
 JAPANESE ([\200-\377]+)
-ASCII ([\41-\47\52-\133\135-\176])
+ASCII ([\101-\132\141-\172]+)
+
+MARK ([\41-\47\52-\100\133\135-\140\173-\176])
 
 ESCAPE  (\134|\50|\51)
 SPACE (\40)
@@ -24,6 +28,8 @@ BEGINqq (\")
 ENDqq (\")
 BEGINq (\')
 ENDq (\')
+BSqq ("\\\"")
+BSq ("\\\'")
 
 /*モード*/
 %Start CODE TEXT Q QQ SS SA
@@ -57,8 +63,10 @@ ENDq (\')
 <CODE>{RESERVE} {
   out(yytext,B);
  }
-
 <CODE>{ASCII} {
+  out(yytext,C);
+ }
+<CODE>{MARK} {
   out(yytext,C);
  }
 <CODE>{JAPANESE} {
@@ -82,15 +90,15 @@ ENDq (\')
 
 <CODE>. ;
 
+
 <SS>{LINE} {
   BEGIN(CODE);
   out(yytext,L);
  }
-
 <SS>{JAPANESE} {
   out(yytext,K);
  }
-<SS>{ASCII} {
+<SS>{OUTC} {
   out(yytext,C);
  }
 <SS>{ESCAPE} {
@@ -103,6 +111,7 @@ ENDq (\')
   out(yytext,T);
  }
 <SS>{PAGE} {
+  BEGIN(CODE);
   out(yytext,P);
  }
 <SS>. ;
@@ -112,10 +121,11 @@ ENDq (\')
   out(yytext,C);
  }
 
+
 <SA>{JAPANESE} {
   out(yytext,K);
  }
-<SA>{ASCII} {
+<SA>{OUTC} {
   out(yytext,C);
  }
 <SA>{ESCAPE} {
@@ -135,15 +145,18 @@ ENDq (\')
  }
 <SA>. ;
 
+
+<QQ>{BSqq} {
+  out(yytext,E);
+ }
 <QQ>{ENDqq} {
   BEGIN(CODE);
   out(yytext,C);
  }
-
 <QQ>{JAPANESE} {
   out(yytext,K);
  }
-<QQ>{ASCII} {
+<QQ>{OUTC} {
   out(yytext,C);
  }
 <QQ>{ESCAPE} {
@@ -163,15 +176,18 @@ ENDq (\')
  }
 <QQ>. ;
 
+
+<Q>{BSq} {
+  out(yytext,E);
+ }
 <Q>{ENDq} {
   BEGIN(CODE);
   out(yytext,C);
  }
-
 <Q>{JAPANESE} {
   out(yytext,K);
  }
-<Q>{ASCII} {
+<Q>{OUTC} {
   out(yytext,C);
  }
 <Q>{ESCAPE} {
@@ -200,7 +216,7 @@ ENDq (\')
 <TEXT>{JAPANESE} {
   out(yytext,K);
 }
-<TEXT>{ASCII} {
+<TEXT>{OUTC} {
   out(yytext,C);
  }
 <TEXT>{ESCAPE} {

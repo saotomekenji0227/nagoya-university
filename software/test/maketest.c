@@ -53,5 +53,19 @@ void main(int argc , char* argv[]){
     for( j = 0 ; j < 85 ; j++)
       fprintf(fp,"a");
   fprintf(fp," 最後にspace");
+  fprintf(fp,"%c",moji);
+  for(i = 0; i < 61;i++)
+    fprintf(fp,"\n");
+  fprintf(fp,"改行でページ");
+  fprintf(fp,"%c",moji);
+  for(i = 0; i < 60;i++)
+    fprintf(fp,"\n");
+  for(i = 0; i < 60 ; i++)
+    for( j = 0 ; j < 85 ; j++)
+      fprintf(fp,"a");
+  fprintf(fp,"全角で改ページ\n");
+  for(i = 0; i < 43 ;i++)
+    fprintf(fp,"全");
+  fprintf(fp,"\n全角もじ数");
   return ;
 }
