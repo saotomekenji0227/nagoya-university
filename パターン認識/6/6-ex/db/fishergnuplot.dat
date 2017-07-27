@@ -1,0 +1,11 @@
+#set term X11
+set terminal png
+set output 'ibisya_or_huribisya.png'
+set title "ibisya_or_huribisya..png"
+set size 1.0, 0.7
+set xlabel "fisher"
+set ylabel "class"
+set ytics  0 , 0.5
+set zeroaxis
+plot[][-0.1:1.1]'w1.dat' with points
+
