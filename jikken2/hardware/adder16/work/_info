@@ -1,0 +1,44 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/mdhome/home0/af0957750/jikken2/adder16
+vadder16
+!i10b 1
+!s100 cLbF:?fhS2PX<<XfHDXPd0
+IMN;HD5oj]zhMfc82P`Jd72
+V3z>NkZOEbANe@895Zd3:l0
+Z1 d/mdhome/home0/af0957750/jikken2/adder16
+Z2 w1507182978
+Fadder16.v
+Z3 8test_adder16.v
+Z4 Ftest_adder16.v
+L0 7
+Z5 OV;L;10.1d;51
+r1
+!s85 0
+31
+Z6 !s108 1507183063.443016
+Z7 !s107 adder16.v|test_adder16.v|
+Z8 !s90 -reportprogress|300|test_adder16.v|
+!s101 -O0
+o-O0
+vtest
+!i10b 1
+!s100 TGjLhGnVSa@4I@fk^8;Xf1
+I6<;SClCIXR1coNYno14AH0
+Vk<3<[f=78GX=_HO53D;7>3
+R1
+R2
+R3
+R4
+L0 10
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!s101 -O0
+o-O0

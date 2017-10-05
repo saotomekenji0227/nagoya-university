@@ -1,0 +1,12 @@
+# OpenFile test_mux21.v 
+vsim test_mux21
+# vsim test_mux21 
+# Loading work.test_mux21
+# Loading work.mux21
+view wave
+# .main_pane.wave.interior.cs.body.pw.wf
+add wave *
+run 80ns
+wave zoom full 
+# {0 ns} {84 ns}
+quit
