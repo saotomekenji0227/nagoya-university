@@ -1,0 +1,166 @@
+課題1.[実行課題] 実行結果
+Standard ML of New Jersey v110.80 [built: Mon Oct  3 11:18:46 2016]
+- 3;
+val it = 3 : int
+- it + 2;
+val it = 5 : int
+- it - 1;
+val it = 4 : int
+- -2 + 5;
+stdIn:4.1 Error: expression or pattern begins with infix identifier "-"
+stdIn:4.1-4.7 Error: operator and operand don't agree [overload conflict]
+  operator domain: [- ty] * [- ty]
+  operand:         [int ty]
+  in expression:
+    - 2
+- ~2 + 5;
+val it = 3 : int
+- val x = 7;
+val x = 7 : int
+- x - 2;
+val it = 5 : int
+- x / 2;
+stdIn:7.1-7.6 Error: operator and operand don't agree [tycon mismatch]
+  operator domain: real * real
+  operand:         int * [int ty]
+  in expression:
+    x / 2
+- x div 2;
+val it = 3 : int
+- x = 9;
+val it = false : bool
+- x * 1.2;
+stdIn:9.1-9.8 Error: operator and operand don't agree [tycon mismatch]
+  operator domain: int * int
+  operand:         int * real
+  in expression:
+    x * 1.2
+- real x * 1.2;
+val it = 8.4 : real
+- if x > 8 then "Yes" else "No";
+val it = "No" : string
+- val c = #"a";
+val c = #"a" : char
+- ord c;
+val it = 97 : int
+- val s = "S";
+val s = "S" : string
+- s ^ "ML";
+val it = "SML" : string
+- 
+
+課題1.[実行課題] 考察
+各入力についてその評価から評価の理由を示す.
+- 3;
+val it = 3 : int
+
+3という数字のみを与えたため,一時的な値としてitが3となった.
+小数点や""がついていないため,int型として識別された.
+
+- it + 2;
+val it = 5 : int
+
+itに3が入っているため，3+2が実行されitが5となった.
+
+- it - 1;
+val it = 4 : int
+
+itに5が入っているため,5-1が実行されitが4となった.
+
+- -2 + 5;
+stdIn:4.1 Error: expression or pattern begins with infix identifier "-"
+stdIn:4.1-4.7 Error: operator and operand don't agree [overload conflict]
+  operator domain: [- ty] * [- ty]
+  operand:         [int ty]
+  in expression:
+    - 2
+
+-は2つの引数を求める演算子であるため-2が計算できず,エラーを出力した.
+
+- ~2 + 5;
+val it = 3 : int
+
+~は符号の反転を示すため~2はcでいう-2であり,cでいう-2+5が実行されitが3となった.
+
+- val x = 7;
+val x = 7 : int
+
+valで変数xを宣言し変数xに7が格納された.
+最初に実行した3;同様小数点がないためint型と識別された.
+
+- x - 2;
+val it = 5 : int
+
+x=7であるため,7-2が実行され,itが5となった.
+
+- x / 2;
+stdIn:7.1-7.6 Error: operator and operand don't agree [tycon mismatch]
+  operator domain: real * real
+  operand:         int * [int ty]
+  in expression:
+    x / 2
+
+xは整数型であり,int型における除算はdivである.
+よって,実数型の除算演算子である/を用いたためエラーとなった.
+
+- x div 2;
+val it = 3 : int
+
+前述のとおり整数型の除算はdivであり,xには7が格納されているためcでいう7/2が実行された.
+結果が3となったが,7.0/2.0=3.5であるため,整数型の除算における小数点以下の扱いは四捨五入ではなく切り捨てであると考えられる.
+
+- x = 9;
+val it = false : bool
+
+xには7がはいっており,SMLにおいて変数に値が入っている場合(変数) = (値)は代入ではなく比較を行う.
+よって,xの値は書き換えられず結果はfalseとなった.
+
+- x * 1.2;
+stdIn:9.1-9.8 Error: operator and operand don't agree [tycon mismatch]
+  operator domain: int * int
+  operand:         int * real
+  in expression:
+    x * 1.2
+
+xが整数型であり*演算は整数同士や実数同士でしか計算できないためエラーとなった.
+
+- real x * 1.2;
+val it = 8.4 : real
+
+realは整数の引数を実数として返すため,7.0*1,2が計算されitに8.4が入った.
+
+- if x > 8 then "Yes" else "No";
+val it = "No" : string
+
+xは書き換えられず7のままであったため,7と8を比較した結果falseとなった.
+よってelse側の実行である"No"がitに入った.
+
+- val c = #"a";
+val c = #"a" : char
+
+変数cに文字型で1文字aが格納された.
+
+- ord c;
+val it = 97 : int
+
+ordは文字型のASCIIコードを返すためaのASCIIコードである97を返した.
+
+- val s = "S";
+val s = "S" : string
+
+#がついていないため1文字ではあるものの文字列として認識し,変数sに文字列"S"が格納された.
+
+- s ^ "ML";
+val it = "SML" : string
+
+^は文字列の結合であるため"S"と"ML"が結合されitに"SML"が入った.
+
+課題2.[作成課題] 実行結果
+Standard ML of New Jersey v110.80 [built: Mon Oct  3 11:18:46 2016]
+- [opening /tmp/emacs-region4194Wcu]
+val it = "$*?" : string
+val it = () : unit
+- 
+
+課題2.[作成課題] 考察
+実行結果より,?と$と*をASCIIコードの小さい順に並べると$,*,?の順になることが確認できた。プログラムの処理としては,まず?と$を比較し，次にその小さい方から順番に*と比較することで3つの文字の順番をすべて確定させている。そのため、最大で3回の比較が行われる。今回は$と?，?と*,$と*で最大値である3回の比較が行われた。
