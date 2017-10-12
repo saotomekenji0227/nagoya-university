@@ -1,0 +1,28 @@
+# OpenFile test_m.v 
+vlib work
+vlog test_m.v
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module m
+# -- Compiling module test
+# 
+# Top level modules:
+# 	test
+vsim test
+# vsim test 
+# Loading work.test
+# Loading work.m
+view wave
+# .main_pane.wave.interior.cs.body.pw.wf
+add wave *
+run 1040ns
+wave zoom 0ns 120ns
+# bad option "0ns": should be one of...
+#   wave zoom cursor ?arg arg ...?
+#   wave zoom full ?arg arg ...?
+#   wave zoom in ?arg arg ...?
+#   wave zoom last ?arg arg ...?
+#   wave zoom out ?arg arg ...?
+#   wave zoom range ?arg arg ...?
+wave zoom range 0ns 120ns
+# {0 ns} {120 ns}
+quit

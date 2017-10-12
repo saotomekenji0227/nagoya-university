@@ -1,0 +1,44 @@
+m255
+K3
+13
+cModel Technology
+Z0 d/mdhome/home0/af0957750/jikken2/bcd1
+vbcd1
+!i10b 1
+!s100 VPI8BC_XE[MT`AG9AHOSZ2
+IE6_@:XBj^009=adSckKk_2
+VF>LDE_55UzDmn^D:2a:oa3
+Z1 d/mdhome/home0/af0957750/jikken2/bcd1
+Z2 w1507783024
+Fbcd1.v
+Z3 8test_bcd1.v
+Z4 Ftest_bcd1.v
+L0 1
+Z5 OV;L;10.1d;51
+r1
+!s85 0
+31
+Z6 !s108 1507783446.509811
+Z7 !s107 bcd1.v|test_bcd1.v|
+Z8 !s90 -reportprogress|300|test_bcd1.v|
+!s101 -O0
+o-O0
+vtest
+!i10b 1
+!s100 _HO6C9?PD:1]:SGJUVJVm1
+I02mFDRiTV1C;RkFDm8O7H0
+Vk<3<[f=78GX=_HO53D;7>3
+R1
+R2
+R3
+R4
+L0 10
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!s101 -O0
+o-O0
