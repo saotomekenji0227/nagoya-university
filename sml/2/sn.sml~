@@ -1,0 +1,4 @@
+fun sn1 1 = 1
+  | sn1 n = sn1(n-1) + n;
+fun sn2 1 = 1
+  | sn2 n = sn2(n-1) + sn1 n;
