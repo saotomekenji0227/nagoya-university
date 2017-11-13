@@ -100,8 +100,7 @@ while_statement
 	 : WHILE condition DO statement
 	;
 for_statement
-	 : FOR IDENT ASSIGN expression
-	 | TO expression DO statement
+	 : FOR IDENT ASSIGN expression TO expression DO statement
 	;
 proc_call_statement
 	 : proc_call_name
