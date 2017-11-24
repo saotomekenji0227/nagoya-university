@@ -1,0 +1,93 @@
+課題1.[作成課題] 実行結果
+val sumList = fn : int list -> int
+/tmp/emacs-region4634Ihk:5.27 Warning: calling polyEqual
+val member = fn : ''a -> ''a list -> bool
+val unique = fn : ''a list -> ''a list
+val filter = fn : ('a -> bool) -> 'a list -> 'a list
+val it = () : unit
+- sumList [1,2,3,4,5];
+val it = 15 : int
+- sumList [];
+val it = 0 : int
+- member 2 [1,2,3,4,5];
+val it = true : bool
+- member 6 [1,2,3,4,5];
+val it = false : bool
+- unique [1,2,3,2,4,1,2,5];
+val it = [3,4,1,2,5] : int list
+- filter (fn x => (x mod 2) = 0) [1,2,3,4,5];
+val it = [2,4] : int list
+
+課題1.[作成課題] 考察
+各関数の記述を説明し正常に動作しているか考察する。
+sumListについてリストが空の時は0を返し、空でないときは(先頭の値 + 先頭を除いたリストのsumList )を返すよう記述した。
+実行結果を見ると、
+- sumList [1,2,3,4,5];
+val it = 15 : int
+- sumList [];
+val it = 0 : int
+となっており、数字のリストを渡すと総和を返すほか、空のリストを渡すと0を返すため正常に動作していると考えられる。
+
+memberについてリストが空の時はfalse返すようにした。
+また、空でないときは先頭の要素と対象の値を比較し一致しないかつ先頭の要素以外にmemberを適用した結果もfalseである場合はfalseを、先頭の要素か先頭以外のmemberの結果がtrueのときはtrueを返すよう記述した。
+実行結果を見ると、
+- member 2 [1,2,3,4,5];
+val it = true : bool
+- member 6 [1,2,3,4,5];
+val it = false : bool
+となっており、リストに対象がある場合true、無い場合falseを返しているため、正常に動作していると考えられる。
+
+uniqueについてリストが空の時は空のリストを返すように記述した。
+また、リストが空でない時は先頭の要素が先頭以外の要素のuniqueに入っているかmemberで判定し、入っているなら先頭以外の要素のuniqueを、入っていないなら先頭の要素と先頭以外の要素のuniqueを結合したリストを返すよう記述した。
+実行結果を見ると、
+- unique [1,2,3,2,4,1,2,5];
+val it = [3,4,1,2,5] : int list
+となっており、重複が削除されているため正常に動作していると考えられる。
+
+filterについてリストが空の時はからのリストを返すように記述した。
+また、リストが空でないときは先頭の要素に第一引数の関数Pを適用し、trueなら先頭の要素と先頭以外の要素にfilterを適用したものを結合して返し、falseなら先頭以外の要素にfilterを適用したものをそのまま返すよう記述した。
+実行結果を見ると
+- filter (fn x => (x mod 2) = 0) [1,2,3,4,5];
+val it = [2,4] : int list
+となっており、mod 2が0となる2と4のみ返しているため正常に動作していると考えられる。
+
+課題2.[作成課題] 実行結果
+val absList = fn : int list -> int list
+[autoloading]
+[library $SMLNJ-BASIS/basis.cm is stable]
+[library $SMLNJ-BASIS/(basis.cm):basis-common.cm is stable]
+[autoloading done]
+val abblist = fn : char list -> char list
+val abbreviate = fn : string -> string
+val it = () : unit
+- absList [1,~2,3,4,~5,~6];
+val it = [1,2,3,4,5,6] : int list
+- abbreviate "Nagoya University";
+val it = "NU" : string
+- abbreviate "National Aeronautics and Space Administration";
+val it = "NASA" : string
+- abbreviate "Standard ML of New Jersey, version 110";
+val it = "SMLNJ110" : string
+
+課題2.[作成課題] 考察
+各関数の記述を説明し正常に動作しているか考察する。
+absListについて空のリストを渡した際はからのリストを返すよう記述した。
+また、空でないリストを渡した際は先頭の要素を0より大きいか調べ、0より大きい場合は先頭の要素と先頭の要素以外にabsListを適用したものを結合し、返す。
+0以下の場合は先頭の要素の符号を反転したものと先頭の要素以外にabsListを適用したものを結合し、返すよう記述した。
+実行結果を見ると、
+- absList [1,~2,3,4,~5,~6];
+val it = [1,2,3,4,5,6] : int list
+となっており、すべての要素について絶対値を取っているため正常に動作していると考えられる。
+
+abbreviateについて、受け取った文字列をexplodeでリストにしabblistで大文字と数字だけにしたのちimplodeで文字列に戻している。
+abblistはリストの大文字と数字だけを残す関数である。処理としては空のリストに対してはからのリストを返す。
+isAlphaNumとisLowerの否定で先頭の文字について大文字と数字を判定し、これに当てはまる場合先頭の文字とabblistを適用した先頭以外のリストを結合して返す。
+当てはまらない場合は先頭以外のリストにabblistを適用した結果を返す。
+実行結果を見ると、
+- abbreviate "Nagoya University";
+val it = "NU" : string
+- abbreviate "National Aeronautics and Space Administration";
+val it = "NASA" : string
+- abbreviate "Standard ML of New Jersey, version 110";
+val it = "SMLNJ110" : string
+となっており、大文字と数字だけ抜き出せているため正常に動作していると考えられる。

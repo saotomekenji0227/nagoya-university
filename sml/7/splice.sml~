@@ -1,0 +1,2 @@
+fun splice ([],s) = ""
+  | splice ((x::xs),s) = x^s^sprice(xs,s);

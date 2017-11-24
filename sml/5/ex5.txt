@@ -1,0 +1,81 @@
+課題1.[作成課題] 実行結果
+val lowerchar = fn : char list -> char list
+val lower = fn : string -> string
+val upperchar = fn : char list -> char list
+val upper = fn : string -> string
+val it = () : unit
+- lower "Standard ML of New Jersey, Version 110.0.7";
+val it = "standard ml of new jersey, version 110.0.7" : string
+- upper "Standard ML of New Jersey, Version 110.0.7";
+val it = "STANDARD ML OF NEW JERSEY, VERSION 110.0.7" : string
+
+課題1.[作成課題] 考察
+プログラムについて説明する。lowerとupperの違いはChar.tolowerを使うかChar.toUpperを使うかだけなので、lowerについてのみ説明を行う。lowerの処理としては受け取った引数の文字列をexplodeでリストにし、lowerchar関数に引き渡して小文字にしてもらい、処理の終わったリストをimplodeで文字列にする。lowerchar関数では受け取ったリストの先頭から1文字取り出し、小文字にする。先頭以外のリストについては再帰的にlowercharを呼び出すことで小文字にする。そして、先頭一文字とその他を結合して返り値とすることですべての文字について小文字に変換したリストを返す。
+動作についてlowerの実行結果より、大文字のS,M,L,N,J,Vがすべて小文字になっているのでlowerは正しく動作していると考えられる。また、同様に、小文字がすべて大文字になっているためupperも正しく動作していると考えられる。
+
+課題2.[作成課題] 実行結果
+val length = fn : 'a list -> int
+val isPrefix = fn : string -> string -> bool
+val it = () : unit
+-isPrefix "" "abcde";
+val it = true : bool
+- isPrefix "abc" "abcde";
+val it = true : bool
+- isPrefix "abcde" "abcde";
+val it = true : bool
+- isPrefix "bcd" "abcde";
+val it = false : bool
+- isPrefix "abcdefg" "abcde";
+val it = false : bool
+
+課題2.[作成課題] 考察
+プログラムの説明をする。まず、第1引数xと第2引数yの長さを作成した関数lengthでxl、ylへ格納する。その際、文字列をリストにして長さをとるためexplodeを用いる。
+出力としては、xの方が長かった場合falseを返す。その後、substringで先頭からxの文字数だけ取り出したyとxを比較することで部分文字列の比較を行い、等しければtrue、間違っていればfalseを返す。
+動作について確認すると、第2引数の先頭文字列が第1引数と一致する最初3つのテストケースではtrueを、残りのテストケースではfalseを返しているため、正常に動作していると考えられる。
+
+課題3.[作成課題] 実行結果
+type student = {Grade:int, Name:string, School:string, University:string}
+val st1 = {Grade=2,Name="Ichiro",School="Engineering",University="Nagoya"}
+  : {Grade:int, Name:string, School:string, University:string}
+val st2 = {Grade=3,Name="Jiro",School="Science",University="Nagoya"}
+  : {Grade:int, Name:string, School:string, University:string}
+val st3 = {Grade=3,Name="Saburo",School="Engineering",University="Nagoya"}
+  : {Grade:int, Name:string, School:string, University:string}
+val st4 = {Grade=4,Name="Shiro",School="Engineering",University="Tokyo"}
+  : {Grade:int, Name:string, School:string, University:string}
+val st5 = {Grade=2,Name="Goro",School="Science",University="Tokyo"}
+  : {Grade:int, Name:string, School:string, University:string}
+val st6 = {Grade=1,Name="Rokuro",School="Engineering",University="Osaka"}
+  : {Grade:int, Name:string, School:string, University:string}
+val st7 = {Grade=3,Name="Shichiro",School="Engineering",University="Osaka"}
+  : {Grade:int, Name:string, School:string, University:string}
+val getSchool = fn : student -> string
+val lower2 = fn : student -> bool
+val sameUnivGrade = fn : student -> student -> bool
+val it = () : unit
+- getSchool st1;
+val it = "Engineering" : string
+- getSchool st2;
+val it = "Science" : string
+- lower2 st6;
+val it = true : bool
+- lower2 st1;
+val it = true : bool
+- lower2 st2;
+val it = false : bool
+- lower2 st4;
+val it = false : bool
+- sameUnivGrade st1 st6;
+val it = false : bool
+- sameUnivGrade st1 st2;
+val it = false : bool
+- sameUnivGrade st1 st5;
+val it = false : bool
+- sameUnivGrade st2 st3;
+val it = true : bool
+
+課題3.[作成課題] 考察
+プログラムについて説明する。getSchool関数はSchoolの値をそのまま返すよう記述した。
+また、lower2はGrade <= 2を返り値とすることで比較結果をboolの値で返すよう記述した。
+sameUnivGradeは引数として二つのstudent型をとるため、それぞれのUniversityとGradeをxuniv,xgrade,yuniv,ygradeとおき、これらをandalsoで同時に比較することで実現した。
+実行結果をみる。getSchoolについて、学生がEngineeringの場合もScienceの場合も取得できていることが分かる。また、lower2について、1年から4年までテストしたところ1年と2年のみtrueとなっていることがわかる。更に、sameUnivGradeについて、すべて違う場合、Universityのみ等しい場合、Gradeのみ等しい場合、両方等しい場合についてテストしたが、両方等しい場合のみtrueを返した。以上より、3つの関数すべてについて正常に動作していると考えられる。

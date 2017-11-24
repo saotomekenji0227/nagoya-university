@@ -1,0 +1,2 @@
+fun suffixList [] = []
+  | suffixList (x::xs) = (x::xs)::(flatten (suffixList xs));

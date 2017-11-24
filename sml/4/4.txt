@@ -1,0 +1,116 @@
+課題1.[説明課題]
+(2)fun f x y z = x (y z) : int;
+まず、全体でintを返り値とする。
+x(y z): int
+y z : 'aとする。
+z : 'bとする。
+y : 'b -> 'a
+x : 'a -> int
+
+f x y z : int
+f x y : 'b -> int
+f x : ('b -> `a) -> 'b -> int
+f : ('a -> int) -> (`b -> 'a) -> 'b -> int
+
+以上よりfの型は('a -> int) -> (`b -> 'a) -> 'b -> intと推定される。
+
+(3) fun g x y z = (x y z):int;
+まず、全体でintを返り値とする。
+x y z : int
+z : 'aとする
+y : 'bとする
+x y : `a -> int
+x :'b -> `a -> int
+ 
+f x y z
+f x y : `a -> int
+f x : 'b -> 'a -> int
+f : ('b ->  'a -> int) -> 'b -> 'a -> int
+
+以上よりfの型は('b ->  'a -> int) -> 'b -> 'a -> intと推定される。
+
+課題2.[作成課題]実行結果
+Standard ML of New Jersey v110.80 [built: Mon[opening /tmp/emacs-region3895pIp]
+val F = fn : 'a -> ('b -> 'c) -> ('a -> 'b) -> 'c
+val G = fn : 'a -> 'b -> ('a -> 'b -> 'c) -> 'c
+
+課題2.[作成課題]考察
+Fについて
+設問の推定について括弧をつけて対応を見ると
+('a -> (('b -> 'c) -> (('a -> 'b) -> 'c)))
+となる。ここから
+F : ('a -> (('b -> 'c) -> (('a -> 'b) -> 'c)))
+F x : ('b -> 'c) -> (('a -> 'b) -> 'c)
+x : 'a
+F x y : ('a -> 'b) -> 'c)
+y : 'b -> 'c
+F x y z : 'c
+z : 'a -> bと逆に推論を進めることでx,y,zの型を推定した。
+zはxを引数に'bを返し、yはzの返り値を引数にcを返す。
+関数全体の返り値は'cなので
+fun F x y z = y (z x);となる。
+実際、実行結果を確認すると
+val F = fn : 'a -> ('b -> 'c) -> ('a -> 'b) -> 'c
+となっており、Fを正しく定義していると考えられる。
+
+Gについて
+設問の推定について括弧をつけて対応を見ると
+('a -> ('b -> (('a -> 'b -> 'c) -> 'c)))
+となる。ここから、
+G : ('a -> ('b -> (('a -> 'b -> 'c) -> 'c)))
+G x : 'b -> (('a -> 'b -> 'c) -> 'c)
+x : 'a
+G x y : ('a -> 'b -> 'c) -> 'c
+y : 'b
+G x y z : 'c
+z : 'a -> 'b -> 'c
+と逆に推定を進めることでx,y,zの型を推定した。
+zはxをうけとるとyを引数、'cを返り値とする関数を返す。
+Gの最後の出力は'cであるため、
+fun G x y z = (z x) y;となる。
+実際、実行結果を確認すると
+val G = fn : 'a -> 'b -> ('a -> 'b -> 'c) -> 'c	
+となっており、正しくGが定義できていると考えられる。
+課題3.[説明課題]
+以下の式について推定する。
+1.fn x => x
+x : 'aとする
+fn x : 'a
+fn :'a -> 'a
+よって、この関数の型は'a -> 'aと推定される。
+
+2.fn x => fn y => x + y
+x : 'aとする。
+y : 'a (x + yより)
+fn(後者) : 'a -> 'a
+fn(前者) : 'a -> 'a -> 'a
+よって、この関数の型は'a -> 'a -> 'aと推定される。
+但し、+は文字型等で使用できずデフォルトはintであるため'aはデフォルトではintとなる。
+この場合int -> int -> intとなる。
+
+3.fn x => fn y => x <= y
+x : 'aとする。
+y : 'a (x <= yより)
+fn(後者) : 'a -> bool
+fn(前者) : 'a -> 'a ->bool
+よって、この関数の型は'a -> 'a ->boolと推定される。
+但し、<=はデフォルトではintであるため'aはデフォルトではintとなる。
+この場合int -> int -> intとなる。
+
+4.fn x => fn y => (x + 2.0, y + 1)
+x : real (x + 2.0より)
+y : int (y + 1より)
+fn(後者) : int -> real * int
+fn(前者) : real -> int -> real * int
+よって、この関数の型はreal -> int -> real * intと推定される。
+
+5.fn x => fn y => fn z => (x y, x "SML", y > z)
+y : 'aとする。
+z : 'a (y > zより)
+x y : 'bとする。
+x : 'a -> 'b
+'a : string (x "SML"より)
+fn(3つめ) : string -> 'b * 'b * bool
+fn(2つめ) : string -> string -> 'b * 'b * bool
+fn(1つめ) : (string -> 'b) -> string -> string -> 'b * 'b * bool
+よって、この関数の型は(string -> 'b) -> string -> string -> 'b * 'b * boolと推定される。

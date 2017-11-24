@@ -1,0 +1,73 @@
+課題1.[作成課題] 実行結果
+val splice = fn : string list * string -> string
+val it = () : unit
+- splice (["", "home", "ohori", "papers", "mltext"], "/");
+val it = "/home/ohori/papers/mltext" : string
+-splice (["www", "ice", "nuie", "nagoya-u", "ac", "jp"], ".");
+val it = "www.ice.nuie.nagoya-u.ac.jp" : string
+- splice (["www"], ".");
+val it = "www" : string
+- splice ([], ".");
+val it = "" : string
+- splice (["abc","def","ghi"], "::");
+val it = "abc::def::ghi" : string
+
+課題1.[作成課題] 考察
+関数spliceについて説明する。関数spliceは空のリストや最後の文字列の後には文字列を付けないため、(1)空のリスト(2)リストに1つしか文字列がないとき(3)リストに複数文字列がある時で場合分けして処理を行った。空のリストの場合は""を返し、最後の文字の場合はその文字をそのまま返すようにした。リストに複数文字列がある場合は先頭と後続の文字列の間に指定した文字列を入れるため、再帰的にそのように定義した。
+実行結果を見るとリストに複数文字列がある場合はその間に指定した文字列が入っている。また、空のリストに対しては空のリストを返している。更にリストに1つしか文字列が無い場合はその文字列をそのまま返している。そのため、spliceとして正常に動作していると考えられる。
+
+課題2.[作成課題] 実行結果
+val suffixList = fn : 'a list -> 'a list list
+/tmp/emacs-region3888fMy:4.29-4.62 Warning: match nonexhaustive
+          (x,y :: ys) => ...
+  
+val suffixListFr = fn : 'a list -> 'a list list
+val it = () : unit
+- suffixList [1,2,3,4];
+val it = [[1,2,3,4],[2,3,4],[3,4],[4],[]] : int list list
+- suffixList [2,3,4];
+val it = [[2,3,4],[3,4],[4],[]] : int list list
+- suffixList [];
+stdIn:27.1-27.14 Warning: type vars not generalized because of
+   value restriction are instantiated to dummy types (X1,X2,...)
+val it = [[]] : ?.X1 list list
+- suffixListFr [1,2,3,4];
+val it = [[1,2,3,4],[2,3,4],[3,4],[4],[]] : int list list
+- suffixListFr [2,3,4];
+val it = [[2,3,4],[3,4],[4],[]] : int list list
+- suffixListFr [];
+stdIn:30.1-30.16 Warning: type vars not generalized because of
+   value restriction are instantiated to dummy types (X1,X2,...)
+val it = [[]] : ?.X1 list list
+
+課題2.[作成課題] 考察
+
+
+課題3.[作成課題] 実行結果
+val flattenFr = fn : 'a list list -> 'a list
+val forallFr = fn : ('a -> bool) -> 'a list -> bool
+val revFl = fn : 'a list -> 'a list
+val it = () : unit
+- flattenFr [[1],[2,3],[4,5,6]];
+val it = [1,2,3,4,5,6] : int list
+-flattenFr [[],[1],[2,3],[4,5,6]];
+val it = [1,2,3,4,5,6] : int list
+- forallFr (fn x => x mod 2 = 0) [1,2,3,4];
+val it = false : bool
+- forallFr (fn x => x mod 2 = 0) [];
+val it = true : bool
+- fun isUpperString s = forallFr Char.isUpper (explode s);
+[autoloading]
+[library $SMLNJ-BASIS/basis.cm is stable]
+[library $SMLNJ-BASIS/(basis.cm):basis-common.cm is stable]
+[autoloading done]
+val isUpperString = fn : string -> bool
+- isUpperString "SML";
+val it = true : bool
+- isUpperString "Java";
+val it = false : bool
+- revFl [1,2,3,4];
+val it = [4,3,2,1] : int list
+- revFl [1];
+val it = [1] : int list
+課題3.[作成課題] 考察
