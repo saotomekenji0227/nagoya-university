@@ -10,9 +10,9 @@
 
 extern int yylineno;
 extern char *yytext;
- int flag=0;
+ int flag=Glob;
+ char *proctmp;
  struct Item *item;
- char *proc;
 %}
 
 %union {
@@ -54,7 +54,7 @@ var_decl_list
 	 | var_decl
 	;
 var_decl
-	 : VAR id_list{flag = 1;}
+	 : VAR id_list
 	;
 subprog_decl_part
 	 : subprog_decl_list SEMICOLON
@@ -68,10 +68,10 @@ subprog_decl
 	 : proc_decl
 	;
 proc_decl
-        : PROCEDURE proc_name SEMICOLON inblock
+: PROCEDURE proc_name SEMICOLON inblock{delete(proctmp); flag = Glob;}
 	;
 proc_name
-  : IDENT{insert($1,2);printf("insert %s %d\n",$1,2); proc = $1;}
+: IDENT{insert($1,Proc);flag=Loc;proctmp=$1;}
 	;
 inblock
   : var_decl_part statement
@@ -114,7 +114,7 @@ proc_call_name
 	 : IDENT
 	;
 block_statement
-  : SBEGIN statement_list SEND//{delete(proc); flag = 0;printf("delete %s",proc);}
+  : SBEGIN statement_list SEND
 	;
 read_statement
 	 : READ LPAREN IDENT RPAREN
@@ -151,15 +151,15 @@ factor
 	 | LPAREN expression RPAREN
 	;
 var_name
-  : IDENT//{item = lookup($1);printf("lookup %s %d",$1,item->type);}
+  : IDENT{item = lookup($1);}
 	;
 arg_list
 	 : expression
 	 | arg_list COMMA expression
 	;
 id_list
-  : IDENT{insert($1,flag);printf("insert %s %d\n",$1,flag);}
- | id_list COMMA IDENT{insert($3,flag);printf("insert %s %d\n",$3,flag);}
+  : IDENT{insert($1,flag);}
+ | id_list COMMA IDENT{insert($3,flag);}
 ;
 %% 
 yyerror(char *s)

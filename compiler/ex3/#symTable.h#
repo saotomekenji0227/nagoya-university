@@ -9,6 +9,6 @@ void delete(char *name);
 struct Item* lookup(char *name);
 enum{
   Glob = 0,
-  Loc,
-  Proc
+  Proc,
+  Loc
 };
