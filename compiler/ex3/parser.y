@@ -151,7 +151,7 @@ factor
 	 | LPAREN expression RPAREN
 	;
 var_name
-  : IDENT{item = lookup($1);}
+: IDENT{lookup($1);}//item = lookup($1);}
 	;
 arg_list
 	 : expression

@@ -1,12 +1,17 @@
-struct Item{
+#define stack_max 1000
+typedef struct{
   char *name;
-  int  sp;
-  int  type;
-  struct Item *next;
-};
+  int sp;
+  int type;
+  
+}Item;
+typedef struct Stack{
+  Item *item;
+  int head;
+}Stack;
 void insert(char *name,int type);
 void delete(char *name);
-struct Item* lookup(char *name);
+Item* lookup(char *name);
 enum{
   Glob = 0,
   Loc,

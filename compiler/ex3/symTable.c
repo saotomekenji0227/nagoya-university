@@ -1,42 +1,56 @@
 #include "symTable.h"
+#include <stdio.h>
 #include <stdlib.h>
-struct Item *stack = NULL;
+Stack stack;
 int sp = 0;
-
+int initialized = 0;
 void insert(char *name,int type){
-  struct Item newitem;
-  newitem.name = name;
-  newitem.type = type;
-  newitem.sp = 0;
-  newitem.next = stack;
-  stack = &newitem;
-  printf("insert %s %d\n",name,type);
+  if(initialized == 0){
+    int i;
+    stack.item =(Item*)malloc(sizeof(Item)*stack_max);
+    stack.head = -1;
+    initialized = 1;
+    for(i = 0;i<stack_max;i++)
+      stack.item[i].name = (char*)malloc(sizeof(char)*256);
+  }
+  stack.head++;
+  stack.item[stack.head].sp = ++sp; 
+  stack.item[stack.head].name = name;
+  stack.item[stack.head].type = type;
+  printf("insert %s %d\n",stack.item[stack.head].name,stack.item[stack.head].type);
 }
 
-struct Item* lookup(char *name){
-    struct Item *tmp;
-    for(tmp = stack; tmp != NULL; tmp = tmp -> next){
-      printf("ここまできた1\n");
-      tmp->name ="a";
-      if(strcmp(tmp->name,name) == 0){
-	printf("ここまできた2\n");
-	printf("lookup %s %d\n",name,tmp->type);
-	return tmp;
-      }
-      printf("ここまできた3\n");
+Item* lookup(char *name){
+  int head;
+  Item *tmp;
+  printf("pri lookup\n");
+  for(head=stack.head;head>-1;head--)
+    printf("%d %s %d\n",head,stack.item[head].name,stack.item[head].type);
+  for(head = stack.head; head > -1; head--){
+    if(strcmp(stack.item[head].name,name) == 0){
+      printf("lookup %s %d\n",stack.item[head].name,stack.item[head].type);
+      tmp= &stack.item[head];
+      return tmp;
     }
-    printf("ここまできた4\n");
-    return NULL;
+  }
+  printf("can't lookup\n");
+  return NULL;
 }
 
 void delete(char *name){
-  struct Item *tmp;
-  for(tmp = stack; tmp != NULL; tmp = tmp->next){
-    if(strcmp(tmp->name,name)==0){
-      stack = tmp;
+  int head;
+  printf("pri delete\n");
+  for(head=stack.head;head>-1;head--)
+    printf("%d %s %d\n",head,stack.item[head].name,stack.item[head].type);
+  for(head = stack.head; head > -1;head--){
+    if(strcmp(stack.item[head].name,name) == 0){
+      stack.head = head;
       break;
     }else
-      printf("delete %s\n",tmp->name);
+      printf("delete %s\n",stack.item[head].name);
   }
+  printf("after delete\n");
+  for(head=stack.head;head>-1;head--)
+    printf("%d %s %d\n",head,stack.item[head].name,stack.item[head].type);
   return;
 }
