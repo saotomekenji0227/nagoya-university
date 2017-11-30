@@ -11,7 +11,6 @@
 extern int yylineno;
 extern char *yytext;
  int flag=Glob;
- char *proctmp;
  struct Item *item;
 %}
 
@@ -68,10 +67,10 @@ subprog_decl
 	 : proc_decl
 	;
 proc_decl
-: PROCEDURE proc_name SEMICOLON inblock{delete(proctmp); flag = Glob;}
+: PROCEDURE proc_name SEMICOLON inblock{flag = Glob; delete();}
 	;
 proc_name
-: IDENT{insert($1,Proc);flag=Loc;proctmp=$1;}
+: IDENT{insert($1,Proc);flag=Loc;}
 	;
 inblock
   : var_decl_part statement
@@ -92,7 +91,7 @@ statement
 	 | write_statement
 	;
 assignment_statement
-	 : IDENT ASSIGN expression
+         : IDENT ASSIGN expression{lookup($1);}
 	;
 if_statement
 	 : IF condition THEN statement else_statement
@@ -105,19 +104,19 @@ while_statement
 	 : WHILE condition DO statement
 	;
 for_statement
-	 : FOR IDENT ASSIGN expression TO expression DO statement
+         : FOR IDENT ASSIGN expression TO expression DO statement{lookup($2);}
 	;
 proc_call_statement
 	 : proc_call_name
 	;
 proc_call_name
-	 : IDENT
+         : IDENT{lookup($1);}
 	;
 block_statement
   : SBEGIN statement_list SEND
 	;
 read_statement
-	 : READ LPAREN IDENT RPAREN
+  : READ LPAREN IDENT RPAREN{lookup($3);}
 	;
 write_statement
 	 : WRITE LPAREN expression RPAREN
@@ -166,3 +165,4 @@ yyerror(char *s)
 {
   fprintf(stderr, "%d %s\n",yylineno,yytext);
 }
+

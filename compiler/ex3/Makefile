@@ -4,7 +4,7 @@ LEX = lex
 parser: y.tab.o lex.yy.o symTable.o
 	$(CC) y.tab.o lex.yy.o symTable.o -ll -o parser
 
-y.tab.o: parser.y
+y.tab.o: parser.y symTable.h
 	 $(YACC) parser.y
 	 $(CC) -ll -c y.tab.c -o y.tab.o
 
