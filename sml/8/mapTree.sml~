@@ -1,0 +1,25 @@
+Control.Print.printDepth := 10;
+Control.Print.stringDepth := 100;
+Control.Print.printLength := 100;
+datatype 'a tree =
+	 Empty | Node of 'a * 'a tree * 'a tree;
+
+fun nodes Empty = 0
+  | nodes (Node (x,L,R)) = 1 + (nodes L) + (nodes R);
+
+fun mapTree F Empty = Empty
+  | mapTree F (Node (x,L,R)) = Node (F x,mapTree F L,mapTree F R);
+
+fun maxTree Empty = NONE
+  | maxTree (Node(x,L,R)) =
+    case ((Node(x,L,R)))
+     of (Node(x,Empty,Empty)) => SOME(x);
+     |  (Node(x,L,Empty)) => if x > (valOf(maxTree L)) then SOME(x)
+			     else (maxTree L)
+     |  (Node(x,Empty,R)) => if x > (valOf(maxTree R)) then SOME(x)
+			     else (maxTree R)
+     |  (Node(x,L,R)) => if ((x > valOf(maxTree L)) andalso (valOf(maxTree L) > valOf(maxTree R))) orelse ((x > valOf(maxTree R)) andalso (valOf(maxTree R) > valOf(maxTree L)))
+			 then SOME(x)
+			else if ((valOf(maxTree L) > x) andalso (x > valOf(maxTree R))) orelse (((valOf(maxTree L) > valOf(maxTree R)) andalso (valOf(maxTree R) x)))
+			
+			then (maxTree L) else (maxTree R);

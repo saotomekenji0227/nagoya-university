@@ -1,0 +1,72 @@
+課題1.[作成課題] 実行結果
+val it = () : unit
+val it = () : unit
+val it = () : unit
+datatype 'a tree = Empty | Node of 'a * 'a tree * 'a tree
+val fromPreOrder = fn : string -> string tree
+val it = () : unit
+- fromPreOrder "a(b()())(c(d()())())";
+val it =
+  Node ("a",Node ("b",Empty,Empty),Node ("c",Node ("d",Empty,Empty),Empty))
+  : string tree
+
+課題1.[作成課題] 考察
+ 括弧の対応付けからNodeを作成する関数fromPreOrderを作成した。中でも括弧を取得するsearchLP、searchRP関数について説明する。
+　searchLPでは"("の場合とそれ以外の場合で条件分岐を行い、"("の場合はその位置を、"("で無い場合は次に進んで"("を探した結果を返すことでwhile文のような処理を再帰を用いて行った。これにより(を見つける関数を実現した。
+　searchRPでは"("の場合と")"の場合とそれ以外の場合で条件分岐を行った。"("が出てきた分")"が出てきた後の")"を探すため、"("が出てきたらカウントを1つ増やし、")"が出てきたらカウントを1つ減らし、カウントが0の時に")"が出てきたらその位置を返すよう記述した。処理はsearchLPと同様に再帰を用いてwhile分のような処理を行った。
+　実行結果を見ると
+- fromPreOrder "a(b()())(c(d()())())";
+val it =
+  Node ("a",Node ("b",Empty,Empty),Node ("c",Node ("d",Empty,Empty),Empty))
+  : string tree	
+  となっており、木構造に変換できているため、正常に動作していると考えられる。
+
+課題2.[作成課題] 実行結果
+val it = () : unit
+val it = () : unit
+val it = () : unit
+datatype 'a tree = Empty | Node of 'a * 'a tree * 'a tree
+val nodes = fn : 'a tree -> int
+val mapTree = fn : ('a -> 'b) -> 'a tree -> 'b tree
+/tmp/emacs-region4242k2h:15.5-25.37 Warning: match nonexhaustive
+          Node (x,Empty,Empty) => ...
+          Node (x,L,Empty) => ...
+          Node (x,Empty,R) => ...
+          Node (x,L,R) => ...
+  
+val maxTree = fn : int tree -> int option
+val it = () : unit
+- nodes (Node(1, Node(2,Empty,Empty), Node(3,Node(4,Empty,Empty),Empty)));
+val it = 4 : int
+- mapTree (fn x => x*2) (Node(1, Node(2,Empty,Empty), Node(3,Node(4,Empty,Empty),Empty)));
+val it = Node (2,Node (4,Empty,Empty),Node (6,Node (8,Empty,Empty),Empty))
+  : int tree
+- maxTree (Node(1, Node(2,Empty,Empty), Node(3,Node(4,Empty,Empty),Empty)));
+val it = SOME 4 : int option
+- maxTree (Node(~1, Node(~2,Empty,Empty), Node(~3,Node(~4,Empty,Empty),Empty)));
+val it = SOME ~1 : int option
+- maxTree Empty;
+val it = NONE : int option
+
+課題2.[作成課題]　考察 
+　まずnodesについて説明する。nodesではEmptyで0、Nodeでそのノードの数(つまり1)+(左の子のnodes)+(右の子のnodes)を返すことで実現した。実行結果を見ると
+- nodes (Node(1, Node(2,Empty,Empty), Node(3,Node(4,Empty,Empty),Empty)));
+val it = 4 : int
+ となっており、ノードの数を数えているため正常に動作していると考えられる。
+
+ mapTreeについて説明する。Emptyが引数の時はEmptyを返し、Nodeが引数の時はNode(Fを適用したx,Fを適用した左の子,Fを適用した右の子)を返すことで実現した。実行結果を見ると
+- mapTree (fn x => x*2) (Node(1, Node(2,Empty,Empty), Node(3,Node(4,Empty,Empty),Empty)));
+val it = Node (2,Node (4,Empty,Empty),Node (6,Node (8,Empty,Empty),Empty))
+  : int tree
+となっており、各要素の値にx*2が適用されそれぞれ2倍になっているため正常に動作していると考えられる。
+
+ maxTreeについて説明する。引数がEmptyの時はNoneを返し、Nodeで子にEmptyがある時はその子を除いた比較を行い、Emptyがないときは親と各子のmaxTreeを比較することで最大値を導出した。実行結果を見ると
+- maxTree (Node(1, Node(2,Empty,Empty), Node(3,Node(4,Empty,Empty),Empty)));
+val it = SOME 4 : int option
+- maxTree (Node(~1, Node(~2,Empty,Empty), Node(~3,Node(~4,Empty,Empty),Empty)));
+val it = SOME ~1 : int option
+- maxTree Empty;
+val it = NONE : int option
+となっており、それぞれ最大値を返しているため正常に動作していると考えられる。なお、EmptyのときはNoneを返している。
+課題3.[作成課題] 実行結果
+課題3.[考察] 実行結果

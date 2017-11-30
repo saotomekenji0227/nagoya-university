@@ -1,0 +1,77 @@
+演習室1(295号室)
+(実行環境)
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}41: hostname
+icec19.ice.nuie.nagoya-u.ac.jp
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}42: cat /proc/version 
+Linux version 2.6.32-696.16.1.el6.x86_64 (mockbuild@c1bl.rdu2.centos.org) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) ) #1 SMP Wed Nov 15 16:51:15 UTC 2017
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}43: cat /etc/redhat-release 
+CentOS release 6.9 (Final)
+
+(利用するサーバ)
+
+ssh : リモート・アクセス用、アプリケーション実行用サーバー(CentOS 6.8)
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}43: telnet ssh 7
+Trying 10.11.1.12...
+telnet: connect to address 10.11.1.12: Connection refused
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}44: telnet ssh 22
+Trying 10.11.1.12...
+Connected to ssh.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_5.3
+
+icemilk:メイルサーバー(Redhat Enterprise Linux 6.8)
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}47: telnet icemilk 7
+Trying 10.11.1.6...
+telnet: connect to address 10.11.1.6: Connection timed out
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}48: telnet icemilk 25
+Trying 10.11.1.6...
+Connected to icemilk.
+Escape character is '^]'.
+220 icemilk.ice.nuie.nagoya-u.ac.jp ESMTP
+
+icecs :WWWサーバー(Redhat Enterprise Linux 6.8)
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}41: telnet icecs 80
+Trying 10.11.1.7...
+Connected to icecs.
+Escape character is '^]'.
+
+ftp :ftpサーバー(CentOS 6.8) 
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}62: telnet ftp 21
+Trying 133.6.202.6...
+Connected to ftp.
+Escape character is '^]'.
+220 Welcome to ftp.ice.nuie.nagoya-u.ac.jp
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}66: telnet ftp 22
+Trying 133.6.202.6...
+Connected to ftp.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_5.3
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}63: telnet ftp 80
+Trying 133.6.202.6...
+Connected to ftp.
+Escape character is '^]'.
+
+ひかく
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}75: diff icecs.txt www.txt
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}73: nslookup www.ice.nuie.nagoya-u.ac.jp
+Server:		10.10.1.2
+Address:	10.10.1.2#53
+
+www.ice.nuie.nagoya-u.ac.jp	canonical name = icecs.ice.nuie.nagoya-u.ac.jp.
+Name:	icecs.ice.nuie.nagoya-u.ac.jp
+Address: 10.11.1.7
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}74: nslookup icecs.ice.nuie.nagoya-u.ac.jp
+Server:		10.10.1.2
+Address:	10.10.1.2#53
+
+Name:	icecs.ice.nuie.nagoya-u.ac.jp
+Address: 10.11.1.7
+
