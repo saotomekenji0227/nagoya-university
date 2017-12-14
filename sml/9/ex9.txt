@@ -1,0 +1,84 @@
+[作成課題] 実行結果
+signature LONGNAT =
+  sig
+    exception NegativeLongNat
+    exception IllegalLongNat
+    type longnat
+    val fromIntList : int list -> longnat
+    val toString : longnat -> string
+    val inc : longnat -> longnat
+    val dec : longnat -> longnat
+    val add : longnat * longnat -> longnat
+  end
+structure LongNat : LONGNAT
+val it = () : unit
+- val x = LongNat.fromIntList [1000,9000,2000];
+val x = - : LongNat.longnat
+- x;
+val it = - : LongNat.longnat
+- LongNat.toString x;
+val it = "200090001000" : string
+- val y = LongNat.fromIntList [9000,1000,8000];
+val y = - : LongNat.longnat
+- val z = LongNat.add (x,y);
+val z = - : LongNat.longnat
+- LongNat.toString z;
+val it = "1000100010000" : string
+- LongNat.fromIntList [1];
+val it = - : LongNat.longnat
+- LongNat.dec it;
+val it = - : LongNat.longnat
+- LongNat.dec it;
+
+uncaught exception NegativeLongNat
+  raised at: /tmp/emacs-region44501AM:54.20-54.35
+- LongNat.addc([],[],0);
+stdIn:1.2-1.14 Error: unbound variable or constructor: addc in path LongNat.addc
+- LongNat.fromIntList [9998];
+val it = - : LongNat.longnat
+- LongNat.inc it;
+val it = - : LongNat.longnat
+- LongNat.inc it;
+val it = - : LongNat.longnat
+- LongNat.toString it;
+val it = "10000" : string
+
+[作成課題] 考察
+まず、incについて説明する。空列のリストは0と同じ扱いなので[1]を返し、空列でないリストは末尾のけた、つまりリストの先頭に1を加算するよう記述した。但し、if文で場合分けを行い、桁上がりが起きる場合は0を末尾以外のリストにincを適用したリストに格納するよう記述した。実行結果を見ると
+- LongNat.fromIntList [9998];
+val it = - : LongNat.longnat
+- LongNat.inc it;
+val it = - : LongNat.longnat
+- LongNat.inc it;
+val it = - : LongNat.longnat
+- LongNat.toString it;
+val it = "10000" : string
+となっており、9998に対して2回インクリメントすることで10000になっているため正常に動作していると考えられる。
+
+次に、decについて説明する。空列のリストは0と同じ扱いなのでデクリメントで負値となるためNegativeLongNatの例外を返す。また、[1]の場合は0を返したいが0は[0]でなく[]であるため[]を返すよう記述した。それ以外の場合、つまり[],[1]以外のリストを受け取った場合は末尾の桁、つまりリストの先頭に1を減算するよう記述した。但し、if文で場合分けを行い、桁下がりが起きる場合はemaxを末尾以外のリストにdecを適用したリストに格納するよう記述した。実行結果を見ると
+- LongNat.fromIntList [1];
+val it = - : LongNat.longnat
+- LongNat.dec it;
+val it = - : LongNat.longnat
+- LongNat.dec it;
+
+uncaught exception NegativeLongNat
+  raised at: /tmp/emacs-region44501AM:54.20-54.35
+となっており、1に対して2回デクリメントすることで負値となりNegativeLongNatの例外処理を返しているため正常に動作していると考えられる。
+
+次に、addについて説明する。add関数自体はキャリー0でaddc関数を実行する処理のみ行った。addc関数では([],[],0)を与えられた時は0+0+0で0、つまり空列[]を返す。また、([],[],c)を与えられた時は0+0+cでcを返すよう記述した。なお、この条件におけるcは0以外のキャリーなので1しか入らない。
+(x::xL(空でないリスト),[],c)の時は空でないリストの先頭要素xとcを加算したものをxLに格納するよう処理した。但し、x+c>emaxのときはincの時と同様に0を、末尾以外のリストにaddcを適用したリストに格納するよう記述した。([],y::yL(空でないリスト),c)のときも同様に処理した。
+両方の要素が存在するとき、つまり(x::xL,y::yL,c)が与えられた際はx+y+cとemaxで比較を行う他、桁上がり時x+y+c-emax-1を末尾に加算する以外片方が空リストの時と同じような処理を行った。実行結果を見ると
+- val x = LongNat.fromIntList [1000,9000,2000];
+val x = - : LongNat.longnat
+- x;
+val it = - : LongNat.longnat
+- LongNat.toString x;
+val it = "200090001000" : string
+- val y = LongNat.fromIntList [9000,1000,8000];
+val y = - : LongNat.longnat
+- val z = LongNat.add (x,y);
+val z = - : LongNat.longnat
+- LongNat.toString z;
+val it = "1000100010000" : string
+となっており、xとyの加算結果がzに入っているため正常に動作していると考えられる。なお、上記実行結果より、xの中身がtoStringを使わないと見れなくなっているためシグネチャ制約も正常にかかっていると考えられる。
