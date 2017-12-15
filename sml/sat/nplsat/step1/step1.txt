@@ -1,0 +1,166 @@
+[実行課題 課題1.1] 実行結果
+- ReadCNF.testReadCNF "test1_1.cnf";
+Variables: 3 Clauses: 3
+[~1,2,3,0]
+[~1,~2,0]
+[1,0]
+val it = () : unit
+- ReadCNF.testReadCNF "test1_2.cnf";
+Variables: 3 Clauses: 4
+[~1,~2,0]
+[2,~3,0]
+[1,3,0]
+[~1,2,3,0]
+val it = () : unit
+- ReadCNF.testReadCNF "test1_3.cnf";
+Variables: 3 Clauses: 4
+[~1,~2,0]
+[2,~3,0]
+[1,3,0]
+[~1,2,3,0]
+val it = () : unit
+
+[実行課題 課題1.1] 考察
+　実行結果とtestファイルを比較すると、Variables、つまり命題変数として命題変数の数を読み込み、Clauses、つまり節として節の数を読み込んでいる。更に、出力されていることから各節を読み込めていることが分かる。
+
+　以上のことからtestReadCNFは読み込んだファイルの中身を読み込めていることを確認する関数として動作していると考えられる。
+
+[説明課題 課題1.2] 説明
+まず変数lineOptにTextIOのinputLineを用いて1行読み込みカウントする。この際、OPTIONストラクチャの型で格納される。
+次にisSomeを用いて正常に読み込めたか判定し、読み込めなかった場合はEndOfInputの例外を返す。
+読み込めた場合は変数lineにvalOfで格納する。(OPTIONストラクチャで無くなる。)
+次にlineが空行、もしくはコメントであるか判定し、当てはまる場合は再帰的にreadLineを実行することで次の行を読み込んでいる。
+当てはまらない場合、つまり空行でもコメントアウトでもない行を読み込んだ場合は読み込んだ1行を返している。
+以上よりまとめると、readLineは空行でもコメントアウトでもない行を入力ストリームinsの上から1行読み込み出力する関数である。
+
+[実行課題 課題1.3] 実行結果
+- Nplsat.nplsat("",["test1_1.cnf"]);
+Number of variables = 3
+Number of clauses = 3
+[~1,2,3]
+[~1,~2]
+[1]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat("",["test1_2.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,~2]
+[2,~3]
+[1,3]
+[~1,2,3]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat("",["test1_3.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,~2]
+[2,~3]
+[1,3]
+[~1,2,3]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+
+[実行課題 課題1.3] 考察
+特にtest1_3.cnfにおける実行結果に注目して考察する。
+上から順に命題変数の数、節の数、各節の中身、変数選択を行った回数、矛盾が起きた回数、推論した回数、判定結果(SATISFIABLE)、変数の割り当て、処理時間が出力されている。
+このうち、命題変数の数、節の数、各節の中身については入力ファイルと同じデータであるため正常に出力していると考えられる。また、変数の割り当てを見ると0 0 0 0となっており、変数選択を行った回数は1回であるため変数選択を行った回数は正常に出力されていると考えられる。
+SATソルバーとしての実行結果をみると、0 0 0 0では[1,3]が満たされないため0 0 0 0でSATISFIABLEと出力されるのはおかしいことになる。そのため、判定を行っておらず、矛盾の検出をできていないことがわかる。
+以上のことから、出力処理自体は正常に動作しているが、判定の機能が動作していないため、SATソルバーとしては正常に動作していないと考えられる。
+
+[作成課題 課題1.4] 作成プログラム
+以下にnplsat.cmの記述を示す。
+
+Group is 
+      control.sml readcnf.sml print.sml nplsat.sml solver.sml 
+      $/basis.cm
+
+[作成課題 課題1.4] 実行結果
+以下に実行結果を示す。
+
+-CM.make "nplsat.cm";
+[scanning nplsat.cm]
+[parsing (nplsat.cm):control.sml]
+[creating directory .cm/SKEL]
+[parsing (nplsat.cm):readcnf.sml]
+[parsing (nplsat.cm):print.sml]
+[parsing (nplsat.cm):nplsat.sml]
+[parsing (nplsat.cm):solver.sml]
+[compiling (nplsat.cm):control.sml]
+[creating directory .cm/GUID]
+[creating directory .cm/x86-unix]
+[code: 207, data: 67, env: 292 bytes]
+[compiling (nplsat.cm):print.sml]
+[code: 7185, data: 373, env: 705 bytes]
+[compiling (nplsat.cm):readcnf.sml]
+[code: 8074, data: 674, env: 346 bytes]
+[compiling (nplsat.cm):solver.sml]
+[code: 9793, data: 793, env: 383 bytes]
+[compiling (nplsat.cm):nplsat.sml]
+[code: 5879, data: 255, env: 287 bytes]
+[New bindings added.]
+val it = true : bool
+- Nplsat.nplsat ("", ["test1_1.cnf"]);
+Number of variables = 3
+Number of clauses = 3
+[~1,2,3]
+[~1,~2]
+[1]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat ("", ["test1_2.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,~2]
+[2,~3]
+[1,3]
+[~1,2,3]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat ("", ["test1_3.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,~2]
+[2,~3]
+[1,3]
+[~1,2,3]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+
+[作成課題 課題1.4] 考察
+4つのsmlファイルをコンパイルするよう記述した。
+コンパイル結果として以下のようにtrueが出力された。
+
+val it = true : bool
+
+また、Nplsat.nplsatの実行結果が課題1.3と等しいため、正常にコンパイルされていると考えられる。

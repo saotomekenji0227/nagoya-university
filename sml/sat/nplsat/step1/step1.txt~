@@ -1,0 +1,76 @@
+[実行課題 課題1.1] 実行結果
+- ReadCNF.testReadCNF "test1_1.cnf";
+Variables: 3 Clauses: 3
+[~1,2,3,0]
+[~1,~2,0]
+[1,0]
+val it = () : unit
+- ReadCNF.testReadCNF "test1_2.cnf";
+Variables: 3 Clauses: 4
+[~1,~2,0]
+[2,~3,0]
+[1,3,0]
+[~1,2,3,0]
+val it = () : unit
+- ReadCNF.testReadCNF "test1_3.cnf";
+Variables: 3 Clauses: 4
+[~1,~2,0]
+[2,~3,0]
+[1,3,0]
+[~1,2,3,0]
+val it = () : unit
+
+[実行課題 課題1.1] 考察
+
+[説明課題 課題1.2] 説明
+
+[実行課題 課題1.3] 実行結果
+- Nplsat.nplsat("",["test1_1.cnf"]);
+Number of variables = 3
+Number of clauses = 3
+[~1,2,3]
+[~1,~2]
+[1]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat("",["test1_2.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,~2]
+[2,~3]
+[1,3]
+[~1,2,3]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat("",["test1_3.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,~2]
+[2,~3]
+[1,3]
+[~1,2,3]
+Decisions: 1
+Conflicts: 0
+Implications: 0
+SATISFIABLE
+0 0 0 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+
+[実行課題 課題1.3] 考察
+
+[作成課題 課題1.4] 作成プログラム
+
+[作成課題 課題1.4] 実行結果
+
+[作成課題 課題1.4] 考察
