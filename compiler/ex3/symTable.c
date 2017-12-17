@@ -3,10 +3,7 @@
 #include <stdlib.h>
 struct Item *sp = NULL;
 int isp = 0;
-/*
-Item test[100];
-int head = 0;
-*/
+
 void insert(char *name,int type){
   struct Item *newitem;
   newitem =(struct Item*)malloc(sizeof(struct Item));
@@ -16,7 +13,10 @@ void insert(char *name,int type){
   newitem->next = sp;
   sp = newitem;
   printf("insert name=%s type=%d sp=%d\n",sp->name,sp->type,sp->sp);
+  printf("symTable\n");
   struct Item *tmp;
+  for(tmp = sp; tmp != NULL; tmp = tmp->next)
+    printf("%s %d %d\n",tmp->name,tmp->type,tmp->sp);
 }
 
 struct Item* lookup(char *name){
@@ -38,6 +38,9 @@ void delete(){
     free(prev);
     if(tmp->type == Proc){
       sp = tmp;
+      printf("symTable\n");
+      for(tmp = sp; tmp != NULL; tmp = tmp->next)
+	printf("%s %d %d\n",tmp->name,tmp->type,tmp->sp);
       return;
     }
   }
