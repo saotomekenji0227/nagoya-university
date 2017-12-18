@@ -18,6 +18,7 @@ void generate(int opcode,REG basereg,REG indexreg,REG address){
   tmp.address = address;
   addOP(tmp);
   opCount++;
+  printOP();
 }
 
 void backpatch(int addr,int opcode,REG basereg,REG indexreg,REG address){
