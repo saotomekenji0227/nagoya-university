@@ -8,7 +8,7 @@
 static FILE *output;
 static OPNODE *head = NULL;
 static OPNODE *tail = NULL;
-static opCount = 0;
+static opCount = -1;
 
 void generate(int opcode,REG basereg,REG indexreg,REG address){
   OPCODE tmp;
@@ -18,6 +18,38 @@ void generate(int opcode,REG basereg,REG indexreg,REG address){
   tmp.address = address;
   addOP(tmp);
   opCount++;
+}
+
+void subRoutineJump(int mainadd){
+  int i;
+  OPNODE *nodetmp;
+  OPCODE newcode;
+
+  newcode.opcode = JMP;
+  newcode.basereg = 0;
+  newcode.indexreg = 0;
+  newcode.address = mainadd;
+
+  for(nodetmp = head; nodetmp->opcode.opcode != DAMMY; nodetmp = nodetmp -> next);
+  nodetmp->opcode = newcode;
+
+  return;
+
+}
+
+void backpatch(int addr,int opcode,REG basereg,REG indexreg,REG address){
+  OPNODE *nodetmp;
+
+  OPCODE newcode;
+  newcode.opcode = opcode;
+  newcode.basereg = basereg;
+  newcode.indexreg = indexreg;
+  newcode.address = address;
+
+  int i;
+  for(i = 0,nodetmp = head; i < addr; i++,nodetmp = nodetmp -> next);
+  nodetmp -> opcode = newcode;
+  return;
 }
 
 int getOPCount(){
