@@ -12,7 +12,7 @@ void insert(char *name,int type){
   newitem =(struct Item*)malloc(sizeof(struct Item));
   if(type == Proc){
     locsp = 0;
-    newitem->sp = getOPCount();
+    newitem->sp = getOPCount()+1;
   }else
     newitem->sp = (type==Loc) ? locsp++:globsp++;
   sprintf(newitem->name,"%s",name);
