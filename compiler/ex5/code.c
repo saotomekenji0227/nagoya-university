@@ -8,7 +8,7 @@
 static FILE *output;
 static OPNODE *head = NULL;
 static OPNODE *tail = NULL;
-static opCount = 0;
+static opCount = -1;
 
 void generate(int opcode,REG basereg,REG indexreg,REG address){
   OPCODE tmp;
@@ -18,6 +18,20 @@ void generate(int opcode,REG basereg,REG indexreg,REG address){
   tmp.address = address;
   addOP(tmp);
   opCount++;
+}
+
+void backpatch(int addr,int opcode,REG basereg,REG indexreg,REG address){
+  OPNODE *nodetmp;
+  OPCODE newcode;
+  newcode.opcode = opcode;
+  newcode.basereg = basereg;
+  newcode.indexreg = indexreg;
+  newcode.address = address;
+
+  int i;
+  for(i = 0,nodetmp = head; i < addr; i++,nodetmp = nodetmp -> next);
+  nodetmp -> opcode = newcode;
+  return;
 }
 
 int getOPCount(){
@@ -58,7 +72,22 @@ void addOP(OPCODE opcode){
   if(tail == NULL){
     head = newnode;
     tail = newnode;
-  }else 
+  }else{
     tail -> next = newnode;
+    tail = newnode;
+  }
+  return;
+}
+
+void printOP(){
+  OPNODE *nodetmp;
+  if(head == NULL){
+    printf("OP is NULL\n");
+    return;
+  }
+  printf("call printOP\n");
+  for(nodetmp = head; nodetmp != NULL; nodetmp = nodetmp -> next)
+     printf("%d %d %d %d\n",nodetmp->opcode.opcode,nodetmp->opcode.basereg,nodetmp->opcode.indexreg,nodetmp->opcode.address);
+  printf("end printOP\n");
   return;
 }

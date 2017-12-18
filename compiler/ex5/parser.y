@@ -19,6 +19,11 @@ extern char *yytext;
     char ident[MAXLENGTH+1];
 }
 
+%type <num> dammy //dammy's type is int
+%type <num> else_statement //if else_statement isn't exist, $$ = -1
+                           //else $$ = dammy's value
+%type <num> label
+
 %token SBEGIN DO ELSE SEND
 %token FOR FORWARD FUNCTION IF PROCEDURE
 %token PROGRAM READ THEN TO VAR
@@ -39,11 +44,9 @@ extern char *yytext;
 program
         : PROGRAM IDENT SEMICOLON outblock PERIOD
         ;
-
 outblock
         : var_decl_part subprog_decl_part statement
         ;
-
 var_decl_part
         : /* empty */
         | var_decl_list SEMICOLON
@@ -56,7 +59,10 @@ var_decl
 	 : VAR id_list
 	;
 subprog_decl_part
-	 : subprog_decl_list SEMICOLON
+	 :dammy subprog_decl_list SEMICOLON
+        {
+	  backpatch($1,JMP,0,0,getOPCount()+1);
+	}
 	 | /* empty*/ 
 	;
 subprog_decl_list
@@ -103,22 +109,53 @@ assignment_statement
          : IDENT ASSIGN expression
 	 {
 	   item = lookup($1);
-	   generate(STO,0,0,item->sp);
+	   generate(STO,item->type,0,item->sp);
 	 }
 	;
 if_statement
-	 : IF condition THEN statement else_statement
+	 : IF condition dammy THEN statement else_statement
+	 {
+	   if($6 == -1)
+	     backpatch($3,JPC,0,0,getOPCount()+1);
+	   else{
+	     backpatch($3,JPC,0,0,$6+1);
+	     backpatch($6,JMP,0,0,getOPCount()+1);
+	   }
+	 }
 	;
 else_statement
-	 : ELSE statement
+         : ELSE dammy statement
+	 {
+	   $$ = $2;
+	 }
 	 | /*empty*/
+	 {
+	   $$ = -1;
+	 }
 	;
 while_statement
-	 : WHILE condition DO statement
+	 : WHILE label condition dammy DO statement
+	 {
+	   generate(JMP,0,0,$2+1);
+	   backpatch($4,JPC,0,0,getOPCount()+1);
+	 }
 	;
 for_statement
-         : FOR IDENT ASSIGN expression TO expression DO statement{lookup($2);}
+         : FOR IDENT ASSIGN expression dammy TO dammy expression dammy dammy DO statement
+	 {
+	   item = lookup($2);
+	   generate(LOD,item->type,0,item->sp);
+	   generate(LIT,0,0,1);
+	   generate(OPR,0,0,1);
+	   generate(STO,item->type,0,item->sp);
+	   generate(JMP,0,0,$7);
+	   backpatch($5,STO,item->type,0,item->sp);
+	   backpatch($7,LOD,item->type,0,item->sp);
+	   backpatch($9,OPR,0,0,8);
+	   backpatch($10,JPC,0,0,getOPCount()+1);
+	 }
 	;
+
 proc_call_statement
 	 : proc_call_name
 	;
@@ -129,24 +166,50 @@ proc_call_name
          }
 	;
 block_statement
-  : SBEGIN statement_list SEND
+        : SBEGIN statement_list SEND
 	;
 read_statement
-  : READ LPAREN IDENT RPAREN{lookup($3);}
+        : READ LPAREN IDENT RPAREN
+	{
+	  item = lookup($3);
+	  generate(GET,0,0,0);
+	  generate(STO,item->type,0,item->sp);
+	}
 	;
 write_statement
-	 : WRITE LPAREN expression RPAREN
+        : WRITE LPAREN expression RPAREN
+        {
+	  generate(PUT,0,0,0);
+        }
 	;
 null_statement
 	 : /*empty*/
 	;
 condition
 	 : expression EQ expression
+         {
+	   generate(OPR,0,0,5);
+	 }
 	 | expression NEQ expression
+         {
+	   generate(OPR,0,0,6);
+	 }
 	 | expression LT expression
+         {
+	   generate(OPR,0,0,7);
+	 }
 	 | expression LE expression
+         {
+	   generate(OPR,0,0,8);
+	 }
 	 | expression GT expression
+         {
+	   generate(OPR,0,0,9);
+	 }
 	 | expression GE expression
+         {
+	   generate(OPR,0,0,10);
+	 }
 	;
 expression
 	 : term
@@ -187,7 +250,7 @@ var_name
          : IDENT
 	 {
 	   item = lookup($1);
-	   generate(LOD,0,0,item->sp);
+	   generate(LOD,item->type,0,item->sp);
 	 }
 	;
 arg_list
@@ -206,6 +269,18 @@ id_list
    insert($3,flag);
  }
 ;
+dammy
+://empty
+{
+  generate(DAMMY,0,0,0);
+  $$ = getOPCount();
+}
+label
+://empty
+{
+  $$ = getOPCount();
+}
+
 %% 
 yyerror(char *s)
 {

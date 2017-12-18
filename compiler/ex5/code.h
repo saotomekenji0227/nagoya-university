@@ -16,4 +16,4 @@
 #define	PUT	11	/* Write data */
 #define	GETC	12	/* Get a character */
 #define	PUTC	13	/* Put a character */
-
+#define DAMMY   14  /*Make a dammy*/

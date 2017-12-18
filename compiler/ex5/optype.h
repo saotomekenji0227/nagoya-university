@@ -31,3 +31,5 @@ int getOPCount();
 void makeOutput();
 OPCODE removeOP();
 void addOP(OPCODE opcode);
+void backpatch(int addr,int opcode,REG basereg,REG indexreg,REG address);
+void printOP();
