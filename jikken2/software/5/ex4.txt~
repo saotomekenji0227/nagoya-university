@@ -1,0 +1,26 @@
+C
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}63: ./echo_server
+Waiting for connections from a client.
+Accepted connection.
+>>> Received (size:2).
+a
+<<< Sending...
+>>> Received (size:2).
+b
+<<< Sending...
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}55: ./echo_client 10.10.3.19
+Connected to server.
+Input 'quit' to disconnect...
+a
+<<< Sending...
+>>> Received.
+a
+b
+<<< Sending...
+>>> Received.
+b
+quit
+
+Java

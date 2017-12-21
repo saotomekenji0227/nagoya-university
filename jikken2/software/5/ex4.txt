@@ -1,0 +1,89 @@
+準備
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}54: nslookup icec19.ice.nuie.nagoya-u.ac.jp 
+Server:		10.10.1.2
+Address:	10.10.1.2#53
+
+Name:	icec19.ice.nuie.nagoya-u.ac.jp
+Address: 10.10.3.19
+
+
+
+C
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}63: ./echo_server
+Waiting for connections from a client.
+Accepted connection.
+>>> Received (size:2).
+a
+<<< Sending...
+>>> Received (size:2).
+b
+<<< Sending...
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}55: ./echo_client 10.10.3.19
+Connected to server.
+Input 'quit' to disconnect...
+a
+<<< Sending...
+>>> Received.
+a
+b
+<<< Sending...
+>>> Received.
+b
+quit
+
+Java
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}71: java TestServer
+Server start...
+accept...
+counter=1
+accept data>counter=1;a
+ok to counter=1
+accept data>counter=1;b
+ok to counter=1
+accept data>counter=1;quit
+ok to counter=1
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}59: java TestClient 10.10.3.19 50000
+server:counter=1
+key in>a
+server:ok
+key in>b
+server:ok
+key in>quit
+server:ok
+
+
+Java:server C:client
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}73java TestServer
+Server start...
+accept...
+counter=1
+accept data>a
+ok to counter=1
+accept data>b
+ok to counter=1
+errorjava.net.SocketException: Connection reset
+
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}61: ./echo_client 10.10.3.19
+Connected to server.
+Input 'quit' to disconnect...
+a
+<<< Sending...
+>>> Received.
+counter=1
+b
+<<< Sending...
+>>> Received.
+ok
+quit
+
+Java:client C:server
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}75: ./echo_server 
+Waiting for connections from a client.
+Accepted connection.
+icec19.ice.nuie.nagoya-u.ac.jp{af0957750}62: java TestClient 10.10.3.19 50000
+a
+b
+quit
