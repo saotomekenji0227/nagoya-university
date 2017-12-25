@@ -209,7 +209,7 @@ fun solve (numVariables, clLiterals) =
 				val _ = update(assignStack,decLevel,((sub(assignStack,decLevel))@[assignVal]))
 				val conflicts = setVarValue (vid, value)
 			    in
-Print.printStrIntNonl "setVarValue " vid;
+				Print.printStrIntNonl "setVarValue " vid;
 				Print.printStrInt "" value;
 				print "varValues: ";
 				Print.printIntArray (varValues);
