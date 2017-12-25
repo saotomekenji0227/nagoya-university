@@ -209,6 +209,14 @@ fun solve (numVariables, clLiterals) =
 				val _ = update(assignStack,decLevel,((sub(assignStack,decLevel))@[assignVal]))
 				val conflicts = setVarValue (vid, value)
 			    in
+Print.printStrIntNonl "setVarValue " vid;
+				Print.printStrInt "" value;
+				print "varValues: ";
+				Print.printIntArray (varValues);
+				print "clNumT: ";
+				Print.printIntArray (clNumT); print "clNumF: ";
+				Print.printIntArray (clNumF); print "conflicts: ";
+				Print.printIntList (conflicts);
 				(* conflicts が空の場合のみ再帰を続ける *)
 				if null conflicts then deduceQueue rest else conflicts
 			    end

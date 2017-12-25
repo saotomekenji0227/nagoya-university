@@ -52,6 +52,10 @@ val it = 0 : OS.Process.status
 [説明課題 課題2.2] 説明
 　arrayToListで命題変数の値の格納されている配列であるvarValuesをリストに変換している。このリストについて先頭の要素は用いていないのでtlを用いて除去し、それをSOMEに入れることでsolveの引数を実現している。
 
+[作成課題 課題3.1] 
+[作成課題 課題3.2] 作成プログラム
+[作成課題 課題3.2] 作成プログラム
+
 [作成課題 課題3.2] 作成プログラム
 		fun incrClNumF nil conflicts = conflicts
 		  | incrClNumF (cl::t) conflicts =
