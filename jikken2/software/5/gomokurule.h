@@ -1,0 +1,4 @@
+#include "gomoku.h"
+
+int gomokuRule(int board[BOARDSIZE][BOARDSIZE],int te,int teban);
+int gomokuCheck(int board[BOARDSIZE][BOARDSIZE], int row, int colum,int teban);

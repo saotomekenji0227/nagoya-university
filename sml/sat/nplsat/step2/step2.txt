@@ -1,0 +1,50 @@
+[作成課題 課題2.1] 作成プログラム
+　以下に作成した関数decide及びdecide内のループ処理を行うdecideLoopを示す。
+fun decideLoop count =
+    if count <= numVariables then
+	if sub(varValues,count) = 0 then
+	    count
+	else
+	    decideLoop (count+1)
+    else
+	0;
+
+fun decide () =
+    let
+	(* numDecisions を1増やす *)
+	val _ = numDecisions := !numDecisions + 1
+	val decidenum = decideLoop 1
+    in 
+	if(decidenum = 0) then
+	    NONE
+	else
+	    (update(varFlipped,decidenum,false);SOME([~decidenum]))
+    end
+
+[作成課題 課題2.1] 実行結果
+- Nplsat.nplsat ("", ["test2_2.cnf"]);
+Number of variables = 4
+Number of clauses = 4
+[~1,2]
+[~2]
+[1,2,~3,~4]
+[4]
+decLevel: 1
+implicationQueue: [~1]
+decLevel: 2
+implicationQueue: [~2]
+decLevel: 3
+implicationQueue: [~3]
+decLevel: 4
+implicationQueue: [~4]
+Decisions: 5
+Conflicts: 0
+Implications: 4
+SATISFIABLE
+-1 -2 -3 -4 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+
+[実行課題 課題2.1] 考察
+
+[説明課題 課題2.2] 説明

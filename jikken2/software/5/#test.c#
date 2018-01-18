@@ -1,0 +1,244 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include "gomoku.h"
+
+
+#define PLAYERMAX 1
+
+int main(void) {
+  int    i,fdcount = 0;
+  int    user_connected_fd, user_listening_fd;
+  struct sockaddr_in user_server_addr;
+  struct sockaddr_in user_client_addr;
+  int    len, buflen;
+  char   buf[1024];
+
+  int    data_connected_fd, data_listening_fd;
+  struct sockaddr_in data_server_addr;
+  struct sockaddr_in data_client_addr;
+    
+  int    rule_connected_fd, rule_listening_fd;
+  struct sockaddr_in rule_server_addr;
+  struct sockaddr_in rule_client_addr;
+  
+
+  /* リスニングソケット作成 */
+  /*for(i = 0; i < PLAYERMAX; i++){*/
+    if ( ( user_listening_fd/*[i]*/ = socket(PF_INET, SOCK_STREAM, 0) ) < 0 ) {
+        perror("*** server: socket ***");
+        exit(1);
+    }
+  //}
+  /*
+  if ( ( user2_listening_fd = socket(PF_INET, SOCK_STREAM, 0) ) < 0 ) {
+    perror("*** server: socket ***");
+    exit(1);
+  }*/
+
+  if ( ( data_listening_fd = socket(PF_INET, SOCK_STREAM, 0) ) < 0 ) {
+    perror("*** server: socket ***");
+    exit(1);
+  }
+
+  if ( ( rule_listening_fd = socket(PF_INET, SOCK_STREAM, 0) ) < 0 ) {
+    perror("*** server: socket ***");
+    exit(1);
+  }
+  
+  int reuse=1;
+  /*for(i = 0; i < PLAYERMAX; i++)*/
+    setsockopt(user_listening_fd/*[i]*/, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(int)); 
+  //setsockopt(user2_listening_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(int)); 
+  setsockopt(data_listening_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(int)); 
+  setsockopt(rule_listening_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(int)); 
+  
+  
+  /* アドレスファミリ・ポート番号・IPアドレス設定 */
+  //以下でソケットの設定を行っている。
+  /*for(i = 0; i < PLAYERMAX; i++){*/
+  bzero( (char *)&user_server_addr/*[i]*/, sizeof(user_server_addr/*[i]*/) );
+  user_server_addr/*[i]*/.sin_family = PF_INET;
+  //Intelはリトルエンディアンに対して、通常のネットワークはビッグエンディアンを採用している
+  //したがってhtonl関数で32ビットのホストバイトオーダをネットワークバイトオーダに変換している。
+  user_server_addr/*[i]*/.sin_addr.s_addr = htonl(INADDR_ANY);
+  //htonsは16ビットのホストバイトオーダの形式をネットワークバイトオーダの形式に変換している
+  //server_addr.sin_port = htons(PORT);
+  user_server_addr/*[i]*/.sin_port = htons(USERPORT);
+ //}
+
+  //対戦相手
+ /* bzero( (char *)&user2_server_addr, sizeof(user2_server_addr) );
+  user2_server_addr.sin_family = PF_INET;
+  user2_server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  user2_server_addr.sin_port = htons(USERPORT);
+ */
+
+  //データユーザインタフェース
+  bzero( (char *)&data_server_addr, sizeof(data_server_addr) );
+  data_server_addr.sin_family = PF_INET;
+  data_server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  data_server_addr.sin_port = htons(DATAPORT);
+ 
+  //ルールインタフェース
+  bzero( (char *)&rule_server_addr, sizeof(rule_server_addr) );
+  rule_server_addr.sin_family = PF_INET;
+  rule_server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  rule_server_addr.sin_port = htons(RULEPORT);
+ 
+
+  /* リスニングソケットにアドレスを割り当て */
+  //for(i = 0; i < PLAYERMAX; i++){
+    if ( bind( user_listening_fd/*[i]*/, (struct sockaddr *)&user_server_addr/*[i]*/, 
+             sizeof(user_server_addr/*[i]*/) ) < 0 ) {
+        perror("*** server: bind ***");
+        close(user_listening_fd/*[i]*/);
+        exit(1);
+  } 
+//}
+
+  if ( bind( data_listening_fd, (struct sockaddr *)&data_server_addr, sizeof(data_server_addr) ) < 0 ) {
+    perror("*** data_server: bind ***");
+    close(data_listening_fd);
+    exit(1);
+  }
+  if ( bind( rule_listening_fd, (struct sockaddr *)&rule_server_addr, sizeof(rule_server_addr) ) < 0 ) {
+    perror("*** rule_server: bind ***");
+    close(rule_listening_fd);
+    exit(1);
+  }
+
+  /* リスニングソケット待ち受け */
+  //これを行うことで、通信待ち状態にする。
+  /*for(i = 0; i < PLAYERMAX; i++){*/
+    if ( listen( user_listening_fd/*[i]*/, 1 ) < 0 ) {
+        perror("*** user_server: listen ***");
+        close(user_listening_fd/*[i]*/);
+        exit(1);
+     }
+  //}
+
+  if ( listen( data_listening_fd, 1 ) < 0 ) {
+        perror("*** data_server: listen ***");
+        close(data_listening_fd);
+        exit(1);
+     }
+  
+   if ( listen( rule_listening_fd, 1 ) < 0 ) {
+        perror("*** rule_server: listen ***");
+        close(rule_listening_fd);
+        exit(1);
+     }
+  
+
+  printf( "Waiting for connections from a client.\n" );
+
+  /* 接続要求受け付け */
+  //これを実行することで、接続要求を処理できる
+  /*for(i = 0; i < PLAYERMAX; i++){
+    len = sizeof(user_client_addr[i]);
+    if ( ( user_connected_fd[i] = accept(user_listening_fd[i], 
+             (struct sockaddr *)&user_client_addr[i], &len) ) < 0 ) {
+        perror("*** server: accept ***");
+        close(user_listening_fd[i]);
+        exit(1);
+    }
+  }
+
+  
+  //接続したので、待ち状態を解除する
+  close(user_listening_fd);
+  printf( "Accepted connection.\n" );*/
+
+  /*  len = sizeof(rule_client_addr);
+    if ( ( rule_connected_fd = accept(rule_listening_fd, 
+             (struct sockaddr *)&rule_client_addr, &len) ) < 0 ) {
+        perror("*** rule_server: accept ***");
+        close(rule_listening_fd);
+        exit(1);
+    }
+    printf("ruleserver connected\n");
+
+
+    len = sizeof(data_client_addr);
+    if ( ( data_connected_fd = accept(data_listening_fd, 
+             (struct sockaddr *)&data_client_addr, &len) ) < 0 ) {
+        perror("*** data_server: accept ***");
+        close(data_listening_fd);
+        exit(1);
+    }
+    printf("dataserver connected\n");
+*/
+    
+    printf("waiting 2 user\n");
+
+  while(1){
+    
+    len = sizeof(user_client_addr/*[fdcount]*/);
+    if(fdcount < PLAYERMAX){
+        if(user_connected_fd/*[fdcount]*/ = accept(user_listening_fd,
+            (struct sockaddr *)&user_client_addr/*[fdcount]*/,&len) < 0){
+                perror("*** userserver: accept ***");
+                close(user_listening_fd);
+                exit(1);
+            }  
+        
+    }
+    fdcount++;
+    printf("debug fdcount = %d\n",fdcount);
+    if(fdcount == PLAYERMAX)
+        break;
+  }
+
+printf("user connected\n");
+/*
+RULEにはint[BOARDSIZE*BOARDSIZE]盤面、int 手、int 手番の順で送信
+int 結果が帰ってくる
+
+2人のuserにはまずint 手番を送る
+int 4桁座標を受け取る
+ルール部で受け取ったゲームの判定がLEGALだったら次の手番に判定と置かれた座標を送る
+ILLEGALだったら判定とダメな座標を送って、もう一回同じ手番に通信を継続して座標を受け取る
+勝敗が決した場合は、判定をそれぞれのユーザに送る
+*/
+
+  close(user_listening_fd);
+  printf( "Accepted connection.\n" );
+
+  /* データの送受信 */
+  while (1) {
+    //クライアントから文字列を読み込む
+    if ( ( buflen = read( user_connected_fd/*[0]*/, buf, sizeof(buf) ) ) <= 0 ) {
+      break;
+    }
+    printf( ">>> Received0 (size:%d).\n", buflen );
+    //読み込んだ文字列を標準出力する
+    write( 1, buf, buflen );
+    printf( "<<< Sending0...\n" );
+    //ACKを返す 
+    if ( write( user_connected_fd/*[0]*/, buf, buflen ) < 0 ) {
+      break;
+    }
+
+   /* if ( ( buflen = read( user_connected_fd[1], buf, sizeof(buf) ) ) <= 0 ) {
+      break;
+    }
+    printf( ">>> Received1 (size:%d).\n", buflen );
+    //読み込んだ文字列を標準出力する
+    write( 1, buf, buflen );
+    printf( "<<< Sending1...\n" );
+    //ACKを返す
+    if ( write( user_connected_fd[1], buf, buflen ) < 0 ) {
+      break;
+    }*/
+  
+  
+  }
+
+  /* ソケット切断 */
+  for(i = 0; i < PLAYERMAX; i++)
+      exit( close(user_connected_fd[i]) );
+}
