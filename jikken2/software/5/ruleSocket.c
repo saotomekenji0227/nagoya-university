@@ -8,12 +8,12 @@
 
 int main(int argc, char *argv[]) {
   struct sockaddr_in addr;
-  int    fd;
-  int    buflen;
-  int   buf[1024];
-  int board1[BOARDSIZE*BOARDSIZE];
+  int fd;
+  int buflen;
+  char buf[SOCKETSIZE];  
+  char board1[BOARDSIZE*BOARDSIZE];
   int board2[BOARDSIZE][BOARDSIZE];
-  int te,teban,result;
+  int te,teban;
   int i;
 
   if ( argc != 2 ) {
@@ -41,15 +41,17 @@ int main(int argc, char *argv[]) {
 
   /* データの送受信 */
   while (1) {
+    if( read( fd, board1, sizeof(board1) ) < 0 )
+      break;
+    boardTypeCast1to2(board1,board2);
+    if( read( fd, buf, sizeof(buf) ) < 0 )
+      break;
+    te = ((int) buf[0])*1000 + ((int) buf[1])*100 + ((int) buf[2])*10 + ((int) buf[3]);
     if( read( fd, buf, sizeof(buf) - 1 ) < 0 )
       break;
-    for(i = 0; i < BOARDSIZE * BOARDSIZE; i++)
-      board1[i] = buf[i];
-    boardTypeCast1to2(board1,board2);
-    te = buf[BOARDSIZE * BOARDSIZE];
-    teban = buf[BOARDSIZE * BOARDSIZE+1];
-    result = gomokuRule(board2,te,teban);
-    if ( write( fd, result , sizeof(int) ) < 0 ) {
+    teban = (int) buf[0];
+    sprintf(buf,"%d",gomokuRule(board2,te,teban));
+    if ( write( fd, buf , sizeof(buf) ) < 0 ) {
       break;
     }
   }

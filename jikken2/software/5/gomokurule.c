@@ -5,11 +5,11 @@
 int gomokuRule(int board[BOARDSIZE][BOARDSIZE],int te,int teban){
   int row,column;
   int i;
-
+  
   //手の分解
   column = te / 100;
   row = te - column * 100;
-
+  
   //非合法手判定
   if( (column < 0) || (BOARDSIZE <= column) )
     return ILLEGAL;
@@ -17,7 +17,7 @@ int gomokuRule(int board[BOARDSIZE][BOARDSIZE],int te,int teban){
     return ILLEGAL;
   if( board[column][row] != NONE )
     return ILLEGAL;
-
+  
   //合法手判定
   return gomokuCheck(board,row,column,teban);
 }
@@ -86,3 +86,6 @@ int gomokuCheck(int board[BOARDSIZE][BOARDSIZE], int row, int column,int teban){
   }
   return LEGAL;
 }
+/*
+int checkFive
+*/
