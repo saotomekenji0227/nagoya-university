@@ -155,7 +155,7 @@ assignment_statement
 	 {
 	   item = lookup($1);
 	   if(item->type == Func)
-	     generate(STO,item->type,0,-5);
+	     generate(STO,1,0,-5);
 	   else
 	     generate(STO,item->type,0,item->sp);
 	 }
@@ -221,7 +221,6 @@ proc_call_statement
 	   }
 	   argListNum = 0;
 	   generate(CAL,0,0,item -> sp);
-	   generate(INT,0,0,-1);
 	 }
 	;
 
@@ -333,7 +332,6 @@ var_or_func
 	   }
 	   argListNum = 0;
 	   generate(CAL,0,0,item -> sp);
-	   generate(INT,0,0,-1);
 	 }
 	;
 /*
