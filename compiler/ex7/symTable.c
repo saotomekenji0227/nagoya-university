@@ -10,7 +10,7 @@ int locsp = 0;
 void insert(char *name,int type){
   struct Item *newitem;
   newitem =(struct Item*)malloc(sizeof(struct Item));
-  if(type == Proc){
+  if(type == Proc || type == Func){
     locsp = 0;
     newitem->sp = getOPCount()+1;
   }else
@@ -28,13 +28,13 @@ struct Item* lookup(char *name){
   for(tmp = sp; tmp != NULL; tmp = tmp->next)
     if(strcmp(tmp->name,name) == 0){
       printf("lookup %s %d\n",tmp->name,tmp->type);
-      if(tmp->type == Proc || tmp->type == PL2Proc) locsp = 0;
+      if(tmp->type == Proc || tmp->type == Func) locsp = 0;
       return tmp;
     }
   printf("can't lookup\n");
   return NULL;
 }
-
+/*
 void changePl2(char *name){
   struct Item *tmp;
   for(tmp = sp; tmp != NULL; tmp = tmp->next)
@@ -45,14 +45,14 @@ void changePl2(char *name){
   printf("can't change pl2\n");
   return;
 }
-
+*/
 void delete(){
-  if(sp->type == Proc || sp->type == PL2Proc) return;  
+  if(sp->type == Proc || sp->type == Func) return;  
   struct Item *tmp,*prev;
   for(prev = sp,tmp = prev -> next; tmp!= NULL; prev = tmp,tmp = tmp ->next){
     printf("delete name=%s type=%d sp=%d\n",prev->name,prev->type,prev->sp);
     free(prev);
-    if(tmp->type == Proc || tmp->type == PL2Proc){
+    if(tmp->type == Proc || tmp->type == Func){
       sp = tmp;
       return;
     }

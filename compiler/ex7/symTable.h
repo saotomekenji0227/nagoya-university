@@ -13,6 +13,6 @@ enum{
   Glob = 0,
   Loc,
   Proc,
-  PL2Proc
+  Func
 };
 

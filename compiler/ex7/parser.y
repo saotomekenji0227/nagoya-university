@@ -77,6 +77,7 @@ subprog_decl_list
 	;
 subprog_decl
 	 : proc_decl
+	 | function_decl
 	;
 proc_decl
          : PROCEDURE proc_name SEMICOLON inblock
@@ -88,6 +89,16 @@ proc_decl
 	   generate(RTN,0,0,0);
 	 }
 	;
+function_decl
+        : FUNCTION func_name SEMICOLON inblock
+	| FUNCTION func_name l_proc_id_list_r SEMICOLON inblock
+	 {
+	   flag = Glob;
+	   delete();
+	   generate(INT,0,0,-1*($3));
+	   generate(RTN,0,0,0);
+	 }
+        ;
 l_proc_id_list_r
   :LPAREN proc_id_list RPAREN
   {
@@ -114,6 +125,13 @@ proc_name
 	   flag=Loc;
          }
 	;
+func_name
+         : IDENT
+	 {
+	   insert($1,Func);
+	   flag=Loc;
+         }
+	;
 inblock
   : var_decl_part statement
 	;
@@ -136,10 +154,9 @@ assignment_statement
          : IDENT ASSIGN expression
 	 {
 	   item = lookup($1);
-	   if(item->type == Proc || item->type == PL2Proc){
-	     changePl2($1);
+	   if(item->type == Func)
 	     generate(STO,item->type,0,-5);
-	   }else
+	   else
 	     generate(STO,item->type,0,item->sp);
 	 }
 	;
@@ -186,7 +203,6 @@ for_statement
 	   backpatch($10,JPC,0,0,getOPCount()+1);
 	 }
 	;
-
 proc_call_statement
          : proc_call_name
 	 {
@@ -287,6 +303,7 @@ term
 	;
 factor
          : var_name
+	 | proc_call_statement
 	 | NUMBER
 	 {
 	   generate(LIT,0,0,$1);
@@ -297,7 +314,10 @@ var_name
          : IDENT
 	 {
 	   item = lookup($1);
-	   generate(LOD,item->type,0,item->sp);
+	   if(item->type == Func)
+	     generate(CAL,0,0,item -> sp);
+	   else
+	     generate(LOD,item->type,0,item->sp);
 	 }
 	;
 arg_list
