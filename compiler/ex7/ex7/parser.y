@@ -26,7 +26,7 @@ extern char *yytext;
 %type <num> dammy //dammy's type is int
 %type <num> else_statement //if else_statement isn't exist, $$ = -1
                            //else $$ = dammy's value
-%type <ident> proc_call_name_or_var_name
+%type <ident> proc_call_name
 %type <num> label
 %type <num> l_proc_id_list_r
 
@@ -203,30 +203,27 @@ for_statement
 	   backpatch($10,JPC,0,0,getOPCount()+1);
 	 }
 	;
-
 proc_call_statement
-         : proc_call_name_or_var_name
+         : proc_call_name
 	 {
 	   item = lookup($1);
 	   generate(CAL,0,0,item -> sp);
 	 }
-	 |proc_call_name_or_var_name dammy LPAREN arg_list RPAREN
+	 |proc_call_name dammy LPAREN arg_list RPAREN
 	 {
 	   item = lookup($1);
 	   if(item->type == Proc){
 	     generate(INT,0,0,-4-argListNum);
 	     backpatch($2,INT,0,0,4);
 	   }else{
-	     generate(INT,0,0,-4-argListNum);
+	     generate(INT,0,0,-5-argListNum);
 	     backpatch($2,INT,0,0,5);
 	   }
 	   argListNum = 0;
 	   generate(CAL,0,0,item -> sp);
-	   generate(INT,0,0,-1);
 	 }
 	;
-
-proc_call_name_or_var_name
+proc_call_name
          : IDENT{
 	   strcpy($$,$1);
          }
@@ -305,47 +302,24 @@ term
 	 }
 	;
 factor
-         : var_or_func
+         : var_name
+	 | proc_call_statement
 	 | NUMBER
 	 {
 	   generate(LIT,0,0,$1);
 	 }
 	 | LPAREN expression RPAREN
 	;
-
-var_or_func
-         : proc_call_name_or_var_name
-	 {
-	   item = lookup($1);
-	   if( item->type == Func )
-	     generate(CAL,0,0,item -> sp);
-	   else
-	     generate(LOD,item->type,0,item->sp);
-	 }
-	 |proc_call_name_or_var_name dammy LPAREN arg_list RPAREN
-	 {
-	   item = lookup($1);
-	   if(item->type == Proc){
-	     generate(INT,0,0,-4-argListNum);
-	     backpatch($2,INT,0,0,4);
-	   }else{
-	     generate(INT,0,0,-4-argListNum);
-	     backpatch($2,INT,0,0,5);
-	   }
-	   argListNum = 0;
-	   generate(CAL,0,0,item -> sp);
-	   generate(INT,0,0,-1);
-	 }
-	;
-/*
 var_name
          : IDENT
 	 {
 	   item = lookup($1);
-	   generate(LOD,item->type,0,item->sp);
+	   if(item->type == Func)
+	     generate(CAL,0,0,item -> sp);
+	   else
+	     generate(LOD,item->type,0,item->sp);
 	 }
 	;
-*/
 arg_list
 	 : expression
 	 {

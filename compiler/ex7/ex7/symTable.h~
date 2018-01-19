@@ -12,7 +12,6 @@ struct Item* lookup(char *name);
 enum{
   Glob = 0,
   Loc,
-  Proc,
-  Func
+  Proc
 };
 
