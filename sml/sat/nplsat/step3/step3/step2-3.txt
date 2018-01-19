@@ -1,0 +1,227 @@
+[作成課題 課題2.1] 作成プログラム
+　以下に作成した関数decide及びdecide内のループ処理を行うdecideLoopを示す。
+fun decideLoop count =
+    if count <= numVariables then
+	if sub(varValues,count) = 0 then
+	    count
+	else
+	    decideLoop (count+1)
+    else
+	0;
+
+fun decide () =
+    let
+	(* numDecisions を1増やす *)
+	val _ = numDecisions := !numDecisions + 1
+	val decidenum = decideLoop 1
+    in 
+	if(decidenum = 0) then
+	    NONE
+	else
+	    (update(varFlipped,decidenum,false);SOME([~decidenum]))
+    end
+
+[作成課題 課題2.1] 実行結果
+- Nplsat.nplsat ("", ["test2_2.cnf"]);
+Number of variables = 4
+Number of clauses = 4
+[~1,2]
+[~2]
+[1,2,~3,~4]
+[4]
+decLevel: 1
+implicationQueue: [~1]
+decLevel: 2
+implicationQueue: [~2]
+decLevel: 3
+implicationQueue: [~3]
+decLevel: 4
+implicationQueue: [~4]
+Decisions: 5
+Conflicts: 0
+Implications: 4
+SATISFIABLE
+-1 -2 -3 -4 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+
+[実行課題 課題2.1] 考察
+作成したdecideについて説明する。decideでは未割り当ての変数を1つ探し、その変数のIDをSOMEに格納したものを返す。未割り当ての変数を探すために再帰的に処理を行うため、個の部分を実現する関数decideLoopを作成した。decideLoopでは未割り当ての変数のうち最初の変数のIDをintで返す。また、未割り当ての変数がみつからなかったら0を返す。この値を用いてdecideでvarFlippedの初期化を行い、SOMEの値を返り値とすることで実装した。
+実行結果を見ると、まだ矛盾の判定は行わないので最初の1回の割り当てを行うのに対し、リテラルの数である4回+NONEを返す1回で5回Decisionsをよんでいることがわかる。また、割り当ても行えているため正常に動作するよう記述で北と考えられる。
+
+[説明課題 課題2.2] 説明
+　arrayToListで命題変数の値の格納されている配列であるvarValuesをリストに変換している。このリストについて先頭の要素は用いていないのでtlを用いて除去し、それをSOMEに入れることでsolveの引数を実現している。
+
+[作成課題 課題3.1] 
+[作成課題 課題3.2] 作成プログラム
+[作成課題 課題3.2] 作成プログラム
+
+[作成課題 課題3.2] 作成プログラム
+		fun incrClNumF nil conflicts = conflicts
+		  | incrClNumF (cl::t) conflicts =
+		    let
+			val newcf = sub (clNumF, cl) + 1
+			val _ = update (clNumF, cl, newcf)
+		    in
+			if(sub(clNumF,cl) >= (List.length(sub(clLiterals,cl)))) then
+			       cl::(incrClNumF t conflicts)
+			   else
+			       incrClNumF t conflicts
+		    end
+[作成課題 課題3.2] 実行結果
+- Nplsat.nplsat ("", ["test3_1.cnf"]);
+Number of variables = 4
+Number of clauses = 4
+[~1,2]
+[~2]
+[1,2,~3,4]
+[~4]
+setVarValue 1 ~1
+varValues: [|0,~1,0,0,0|]
+clNumT: [|1,0,0,0|]
+clNumF: [|0,0,1,0|]
+conflicts: []
+setVarValue 2 ~1
+varValues: [|0,~1,~1,0,0|]
+clNumT: [|1,1,0,0|]
+clNumF: [|1,0,2,0|]
+conflicts: []
+setVarValue 3 ~1
+varValues: [|0,~1,~1,~1,0|]
+clNumT: [|1,1,1,0|]
+clNumF: [|1,0,2,0|]
+conflicts: []
+setVarValue 4 ~1
+varValues: [|0,~1,~1,~1,~1|]
+clNumT: [|1,1,1,1|]
+clNumF: [|1,0,3,0|]
+conflicts: []
+Decisions: 5
+Conflicts: 0
+Implications: 4
+SATISFIABLE
+-1 -2 -3 -4 0
+Computation time is 1msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat ("", ["test3_2.cnf"]);
+Number of variables = 3
+Number of clauses = 4
+[~1,2]
+[3]
+[~2,~3]
+[1,3]
+setVarValue 1 ~1
+varValues: [|0,~1,0,0|]
+clNumT: [|1,0,0,0|]
+clNumF: [|0,0,0,1|]
+conflicts: []
+setVarValue 2 ~1
+varValues: [|0,~1,~1,0|]
+clNumT: [|1,0,1,0|]
+clNumF: [|1,0,0,1|]
+conflicts: []
+setVarValue 3 ~1
+varValues: [|0,~1,~1,~1|]
+clNumT: [|1,0,2,0|]
+clNumF: [|1,1,0,2|]
+conflicts: [1,3]
+Decisions: 3
+Conflicts: 1
+Implications: 3
+UNSATISFIABLE
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+
+[作成課題 課題3.2] 考察
+- Nplsat.nplsat ("", ["test3_1.cnf"]); 
+Number of variables = 4
+Number of clauses = 4
+[~1,2]
+[~2]
+[1,2,~3,4]
+[~4]
+deduce at decision level 1
+implicationQueue: [~1]
+varDecLevel: [|~1,1,~1,~1,~1|]
+assignStack at decision level 1 [~1]
+deduce at decision level 2
+implicationQueue: [~2]
+varDecLevel: [|~1,1,2,~1,~1|]
+assignStack at decision level 2 [~1]
+deduce at decision level 3
+implicationQueue: [~3]
+varDecLevel: [|~1,1,2,3,~1|]
+assignStack at decision level 3 [~1]
+deduce at decision level 4
+implicationQueue: [~4]
+varDecLevel: [|~1,1,2,3,4|]
+assignStack at decision level 4 [~1]
+Decisions: 5
+Conflicts: 0
+Implications: 4
+SATISFIABLE
+-1 -2 -3 -4 0
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+- CM.make"nplsat.cm";
+[scanning nplsat.cm]
+[parsing (nplsat.cm):solver.sml]
+[compiling (nplsat.cm):solver.sml]
+[code: 13039, data: 1247, env: 383 bytes]
+[New bindings added.]
+val it = true : bool
+- Nplsat.nplsat ("", ["test3_1.cnf"]); 
+Number of variables = 4
+Number of clauses = 4
+[~1,2]
+[~2]
+[1,2,~3,4]
+[~4]
+deduce at decision level 1
+implicationQueue: [~1]
+varDecLevel: [|~1,1,~1,~1,~1|]
+assignStack at decision level 1 [~1]
+deduce at decision level 2
+implicationQueue: [~2]
+varDecLevel: [|~1,1,2,~1,~1|]
+assignStack at decision level 2 [~2]
+deduce at decision level 3
+implicationQueue: [~3]
+varDecLevel: [|~1,1,2,3,~1|]
+assignStack at decision level 3 [~3]
+deduce at decision level 4
+implicationQueue: [~4]
+varDecLevel: [|~1,1,2,3,4|]
+assignStack at decision level 4 [~4]
+Decisions: 5
+Conflicts: 0
+Implications: 4
+SATISFIABLE
+-1 -2 -3 -4 0
+Computation time is 0msec.
+val it = 0 : OS.Process.status
+- Nplsat.nplsat ("", ["test3_2.cnf"]); 
+Number of variables = 3
+Number of clauses = 4
+[~1,2]
+[3]
+[~2,~3]
+[1,3]
+deduce at decision level 1
+implicationQueue: [~1]
+varDecLevel: [|~1,1,~1,~1|]
+assignStack at decision level 1 [~1]
+deduce at decision level 2
+implicationQueue: [~2]
+varDecLevel: [|~1,1,2,~1|]
+assignStack at decision level 2 [~2]
+deduce at decision level 3
+implicationQueue: [~3]
+varDecLevel: [|~1,1,2,3|]
+assignStack at decision level 3 [~3]
+Decisions: 3
+Conflicts: 1
+Implications: 3
+UNSATISFIABLE
+Computation time is 1msec.
+val it = 0 : OS.Process.status
