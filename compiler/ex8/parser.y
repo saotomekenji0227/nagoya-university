@@ -81,7 +81,11 @@ subprog_decl
 	 | function_decl
 	;
 proc_decl
-         : PROCEDURE proc_name SEMICOLON inblock
+: PROCEDURE proc_name SEMICOLON inblock{
+	   flag = Glob;
+	   delete();
+	   generate(RTN,0,0,0);
+ }
 	 | PROCEDURE proc_name l_proc_id_list_r SEMICOLON inblock
 	 {
 	   flag = Glob;
@@ -91,7 +95,11 @@ proc_decl
 	 }
 	;
 function_decl
-        : FUNCTION func_name SEMICOLON inblock
+        : FUNCTION func_name SEMICOLON inblock{
+	   flag = Glob;
+	   delete();
+	   generate(RTN,0,0,0);
+ }
 	| FUNCTION func_name l_proc_id_list_r SEMICOLON inblock
 	 {
 	   flag = Glob;

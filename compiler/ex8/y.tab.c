@@ -403,7 +403,7 @@ static short   *yyss;
 static short   *yysslim;
 static YYSTYPE *yyvs;
 static int      yystacksize;
-#line 426 "parser.y"
+#line 434 "parser.y"
  
 yyerror(char *s)
 {
@@ -597,8 +597,16 @@ case 8:
 	  backpatch(yyvsp[-2].num,JMP,0,0,getOPCount()+1);
 	}
 break;
+case 14:
+#line 84 "parser.y"
+{
+	   flag = Glob;
+	   delete();
+	   generate(RTN,0,0,0);
+ }
+break;
 case 15:
-#line 86 "parser.y"
+#line 90 "parser.y"
 {
 	   flag = Glob;
 	   delete();
@@ -606,8 +614,16 @@ case 15:
 	   generate(RTN,0,0,0);
 	 }
 break;
+case 16:
+#line 98 "parser.y"
+{
+	   flag = Glob;
+	   delete();
+	   generate(RTN,0,0,0);
+ }
+break;
 case 17:
-#line 96 "parser.y"
+#line 104 "parser.y"
 {
 	   flag = Glob;
 	   delete();
@@ -616,7 +632,7 @@ case 17:
 	 }
 break;
 case 18:
-#line 105 "parser.y"
+#line 113 "parser.y"
 {
     yyval.num = procIdListNum;
     generate(INT,0,0,procIdListNum);
@@ -624,35 +640,35 @@ case 18:
   }
 break;
 case 19:
-#line 112 "parser.y"
+#line 120 "parser.y"
 {
     ++procIdListNum;
     insert(yyvsp[0].ident,flag);
   }
 break;
 case 20:
-#line 117 "parser.y"
+#line 125 "parser.y"
 {
    ++procIdListNum;
    insert(yyvsp[0].ident,flag);
  }
 break;
 case 21:
-#line 124 "parser.y"
+#line 132 "parser.y"
 { 
 	   insert(yyvsp[0].ident,Proc);
 	   flag=Loc;
          }
 break;
 case 22:
-#line 131 "parser.y"
+#line 139 "parser.y"
 {
 	   insert(yyvsp[0].ident,Func);
 	   flag=Loc;
          }
 break;
 case 35:
-#line 156 "parser.y"
+#line 164 "parser.y"
 {
 	   item = lookup(yyvsp[-2].ident);
 	   if(item->type == Func)
@@ -662,7 +678,7 @@ case 35:
 	 }
 break;
 case 36:
-#line 164 "parser.y"
+#line 172 "parser.y"
 {
 	   item = lookup(yyvsp[-8].ident);
 	   backpatch(yyvsp[-5].num,LIT,0,0,item->array_top);
@@ -673,7 +689,7 @@ case 36:
 	 }
 break;
 case 37:
-#line 175 "parser.y"
+#line 183 "parser.y"
 {
 	   if(yyvsp[0].num == -1)
 	     backpatch(yyvsp[-3].num,JPC,0,0,getOPCount()+1);
@@ -684,26 +700,26 @@ case 37:
 	 }
 break;
 case 38:
-#line 186 "parser.y"
+#line 194 "parser.y"
 {
 	   yyval.num = yyvsp[-1].num;
 	 }
 break;
 case 39:
-#line 190 "parser.y"
+#line 198 "parser.y"
 {
 	   yyval.num = -1;
 	 }
 break;
 case 40:
-#line 196 "parser.y"
+#line 204 "parser.y"
 {
 	   generate(JMP,0,0,yyvsp[-4].num+1);
 	   backpatch(yyvsp[-2].num,JPC,0,0,getOPCount()+1);
 	 }
 break;
 case 41:
-#line 203 "parser.y"
+#line 211 "parser.y"
 {
 	   item = lookup(yyvsp[-10].ident);
 	   generate(LOD,item->type,0,item->sp);
@@ -718,14 +734,14 @@ case 41:
 	 }
 break;
 case 42:
-#line 218 "parser.y"
+#line 226 "parser.y"
 {
 	   item = lookup(yyvsp[0].ident);
 	   generate(CAL,0,0,item -> sp);
 	 }
 break;
 case 43:
-#line 223 "parser.y"
+#line 231 "parser.y"
 {
 	   item = lookup(yyvsp[-4].ident);
 	   if(item->type == Proc){
@@ -740,13 +756,13 @@ case 43:
 	 }
 break;
 case 44:
-#line 238 "parser.y"
+#line 246 "parser.y"
 {
 	   strcpy(yyval.ident,yyvsp[0].ident);
          }
 break;
 case 46:
-#line 247 "parser.y"
+#line 255 "parser.y"
 {
 	  item = lookup(yyvsp[-1].ident);
 	  generate(GET,0,0,0);
@@ -754,7 +770,7 @@ case 46:
 	}
 break;
 case 47:
-#line 253 "parser.y"
+#line 261 "parser.y"
 {
 	  item = lookup(yyvsp[-4].ident);
 	  generate(LIT,0,0,item->array_top);
@@ -765,85 +781,85 @@ case 47:
 	}
 break;
 case 48:
-#line 264 "parser.y"
+#line 272 "parser.y"
 {
 	  generate(PUT,0,0,0);
         }
 break;
 case 50:
-#line 273 "parser.y"
+#line 281 "parser.y"
 {
 	   generate(OPR,0,0,5);
 	 }
 break;
 case 51:
-#line 277 "parser.y"
+#line 285 "parser.y"
 {
 	   generate(OPR,0,0,6);
 	 }
 break;
 case 52:
-#line 281 "parser.y"
+#line 289 "parser.y"
 {
 	   generate(OPR,0,0,7);
 	 }
 break;
 case 53:
-#line 285 "parser.y"
+#line 293 "parser.y"
 {
 	   generate(OPR,0,0,8);
 	 }
 break;
 case 54:
-#line 289 "parser.y"
+#line 297 "parser.y"
 {
 	   generate(OPR,0,0,9);
 	 }
 break;
 case 55:
-#line 293 "parser.y"
+#line 301 "parser.y"
 {
 	   generate(OPR,0,0,10);
 	 }
 break;
 case 58:
-#line 301 "parser.y"
+#line 309 "parser.y"
 {
 	   generate(OPR,0,0,0);
 	 }
 break;
 case 59:
-#line 305 "parser.y"
+#line 313 "parser.y"
 {
 	   generate(OPR,0,0,1);
 	 }
 break;
 case 60:
-#line 309 "parser.y"
+#line 317 "parser.y"
 {
 	   generate(OPR,0,0,2);
 	 }
 break;
 case 62:
-#line 316 "parser.y"
+#line 324 "parser.y"
 {
 	   generate(OPR,0,0,3);
 	 }
 break;
 case 63:
-#line 320 "parser.y"
+#line 328 "parser.y"
 {
 	   generate(OPR,0,0,4);
 	 }
 break;
 case 66:
-#line 328 "parser.y"
+#line 336 "parser.y"
 {
 	   generate(LIT,0,0,yyvsp[0].num);
 	 }
 break;
 case 68:
-#line 336 "parser.y"
+#line 344 "parser.y"
 {
   item = lookup(yyvsp[-3].ident);
   generate(LIT,0,0,item->array_top);
@@ -853,7 +869,7 @@ case 68:
 }
 break;
 case 69:
-#line 346 "parser.y"
+#line 354 "parser.y"
 {
 	   item = lookup(yyvsp[0].ident);
 	   if( item->type == Func )
@@ -863,7 +879,7 @@ case 69:
 	 }
 break;
 case 70:
-#line 354 "parser.y"
+#line 362 "parser.y"
 {
 	   item = lookup(yyvsp[-4].ident);
 	   if(item->type == Proc){
@@ -878,33 +894,33 @@ case 70:
 	 }
 break;
 case 71:
-#line 381 "parser.y"
+#line 389 "parser.y"
 {
 	   argListNum++;
 	 }
 break;
 case 72:
-#line 385 "parser.y"
+#line 393 "parser.y"
 {
 	   argListNum++;
 	 }
 break;
 case 73:
-#line 391 "parser.y"
+#line 399 "parser.y"
 {
     generate(LIT,0,0,0);
     insert(yyvsp[0].ident,flag);
   }
 break;
 case 74:
-#line 396 "parser.y"
+#line 404 "parser.y"
 {
    generate(LIT,0,0,0);
    insert(yyvsp[0].ident,flag);
  }
 break;
 case 77:
-#line 406 "parser.y"
+#line 414 "parser.y"
 {
   for(i = yyvsp[-3].num; i<= yyvsp[-1].num; i++){
     generate(LIT,0,0,0);
@@ -913,19 +929,19 @@ case 77:
 }
 break;
 case 78:
-#line 416 "parser.y"
+#line 424 "parser.y"
 {
   generate(DAMMY,0,0,0);
   yyval.num = getOPCount();
 }
 break;
 case 79:
-#line 422 "parser.y"
+#line 430 "parser.y"
 {
   yyval.num = getOPCount();
 }
 break;
-#line 929 "y.tab.c"
+#line 945 "y.tab.c"
     }
     yyssp -= yym;
     yystate = *yyssp;

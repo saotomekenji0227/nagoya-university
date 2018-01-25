@@ -46,7 +46,7 @@ struct Item* lookup(char *name){
   struct Item *tmp;
   for(tmp = sp; tmp != NULL; tmp = tmp->next)
     if(strcmp(tmp->name,name) == 0){
-      printf("lookup %s %d\n",tmp->name,tmp->type);
+      printf("lookup %s %d %d\n",tmp->name,tmp->type,tmp->sp);
       if(tmp->type == Proc || tmp->type == Func) locsp = 0;
       return tmp;
     }
@@ -55,6 +55,7 @@ struct Item* lookup(char *name){
 }
 
 void delete(){
+  printf("call delete\n");
   if(sp->type == Proc || sp->type == Func) return;  
   struct Item *tmp,*prev;
   for(prev = sp,tmp = prev -> next; tmp!= NULL; prev = tmp,tmp = tmp ->next){

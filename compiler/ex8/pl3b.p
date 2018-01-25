@@ -21,7 +21,8 @@ begin
         for i := 2 to n do
             if a[i] = 0 then 
 	    begin
-	        write(i);
+	       write(i);
 	        check(i);
 	    end
+            else
 end.
